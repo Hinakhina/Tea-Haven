@@ -1,58 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
+    
 public class MenuButton : MonoBehaviour
 {
-    [SerializeField] GameObject creditScreen;
-    [SerializeField] GameObject exitingScreen;
+    private GameManager gameManager;
 
-    public void Start(){
-        creditScreen.SetActive(false);
-        exitingScreen.SetActive(false);
+    [SerializeField] GameObject creditScreen; // No longer used directly
+    [SerializeField] GameObject exitingScreen; // No longer used directly
+
+    private void Start()
+    {
+        // Find the GameManager in the scene
+        gameManager = FindObjectOfType<GameManager>();
+
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager not found in the scene!");
+        }
     }
 
-    // Start is called before the first frame update
-    public void NewGameButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        SceneManager.LoadScene("GamePlay");
-        Debug.Log("Start a new game...");
+    public void NewGameButton()
+    {
+        // Calls GameManager's StartNewGame method
+        gameManager?.StartNewGame();
     }
 
-    public void ContinueButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        SceneManager.LoadScene("GamePlay");
+    public void ContinueButton()
+    {
+        // Calls GameManager's ContinueGame method
+        gameManager?.ContinueGame();
     }
 
-    public void SettingsButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        SceneManager.LoadScene("SettingsPage");
+    public void SettingsButton()
+    {
+        // Calls GameManager's OpenSettings method
+        gameManager?.OpenSettings();
     }
 
-    public void CreditsButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        creditScreen.SetActive(true);
-        
+    public void CreditsButton()
+    {
+        // Calls GameManager's ShowCredits method
+        gameManager?.ShowCredits();
     }
 
-    public void CloseCreditsButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        creditScreen.SetActive(false);
+    public void CloseCreditsButton()
+    {
+        // Calls GameManager's CloseCredits method
+        gameManager?.CloseCredits();
     }
 
-    public void ExitButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        exitingScreen.SetActive(true);
+    public void ExitButton()
+    {
+        // Calls GameManager's ShowExitConfirmation method
+        gameManager?.ShowExitConfirmation();
     }
 
-    public void NoExitButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        exitingScreen.SetActive(false);
+    public void NoExitButton()
+    {
+        // Calls GameManager's CancelExit method
+        gameManager?.CancelExit();
     }
 
-    public void YesExitButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        Application.Quit(); //exit apps
+    public void YesExitButton()
+    {
+        // Calls GameManager's ExitGame method
+        gameManager?.ExitGame();
     }
 }
