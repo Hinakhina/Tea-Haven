@@ -1,13 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
+    // Main Menu UI
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject creditScreen;
     [SerializeField] private GameObject exitingScreen;
+
+    // Tea Brewing UI
+    [SerializeField] private GameObject brewingMachine;
+    [SerializeField] private Image teaCupImage;
+    [SerializeField] private GameObject orderPanel;
+    [SerializeField] private Text statusText;
+
+    private bool isBrewing = false;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
 
     private void Start()
     {
@@ -16,10 +32,12 @@ public class GameManager : MonoBehaviour
         if (exitingScreen != null) exitingScreen.SetActive(false);
     }
 
+    // ------------------ MAIN MENU FUNCTIONS ------------------
+
     public void StartNewGame()
     {
         Debug.Log("Starting a new game...");
-        SceneManager.LoadScene("GamePlay");
+        SceneManager.LoadScene("GamePlay"); // Load the game scene
     }
 
     public void ContinueGame()
@@ -74,5 +92,39 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Exiting the game...");
         Application.Quit();
+    }
+
+    // ------------------ TEA BREWING GAME FUNCTIONS ------------------
+
+    public void SelectTeaLeaves()
+    {
+        Debug.Log("Tea leaves selected!");
+        statusText.text = "Tea leaves selected!";
+    }
+
+    public void StartBrewing()
+    {
+        if (!isBrewing)
+        {
+            isBrewing = true;
+            statusText.text = "Brewing...";
+            StartCoroutine(BrewingProcess());
+        }
+    }
+
+    private IEnumerator BrewingProcess()
+    {
+        yield return new WaitForSeconds(3);
+        statusText.text = "Brewing complete!";
+        isBrewing = false;
+    }
+
+    public void ServeTea()
+    {
+        if (!isBrewing)
+        {
+            Debug.Log("Tea served!");
+            statusText.text = "Tea served!";
+        }
     }
 }
