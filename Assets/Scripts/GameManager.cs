@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
     // Main Menu UI
     [SerializeField] private GameObject mainMenu;
@@ -13,16 +13,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject exitingScreen;
 
     // Tea Brewing UI
-    [SerializeField] private GameObject brewingMachine;
+    [SerializeField] private BrewingMachine brewingMachine;
     [SerializeField] private Image teaCupImage;
     [SerializeField] private GameObject orderPanel;
     [SerializeField] private Text statusText;
 
     private bool isBrewing = false;
+    private string currentOrder;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     private void Start()
@@ -37,7 +46,7 @@ public class GameManager : MonoBehaviour
     public void StartNewGame()
     {
         Debug.Log("Starting a new game...");
-        SceneManager.LoadScene("GamePlay"); // Load the game scene
+        SceneManager.LoadScene("GamePlay");
     }
 
     public void ContinueGame()
@@ -96,19 +105,30 @@ public class GameManager : MonoBehaviour
 
     // ------------------ TEA BREWING GAME FUNCTIONS ------------------
 
-    public void SelectTeaLeaves()
+    public void ReceiveOrder(string teaType)
     {
-        Debug.Log("Tea leaves selected!");
-        statusText.text = "Tea leaves selected!";
+        currentOrder = teaType;
+        statusText.text = "New Order: " + teaType;
+    }
+
+    public void SelectTeaLeaves(string teaType)
+    {
+        Debug.Log("Tea leaves selected: " + teaType);
+        statusText.text = "Selected: " + teaType;
+        brewingMachine.SetTeaType(teaType);
     }
 
     public void StartBrewing()
     {
-        if (!isBrewing)
+        if (!isBrewing && brewingMachine.HasTea())
         {
             isBrewing = true;
             statusText.text = "Brewing...";
             StartCoroutine(BrewingProcess());
+        }
+        else
+        {
+            statusText.text = "Select tea leaves first!";
         }
     }
 
@@ -121,10 +141,20 @@ public class GameManager : MonoBehaviour
 
     public void ServeTea()
     {
-        if (!isBrewing)
+        if (!isBrewing && brewingMachine.HasTea())
         {
-            Debug.Log("Tea served!");
-            statusText.text = "Tea served!";
+            string brewedTea = brewingMachine.GetBrewedTea();
+            if (brewedTea == currentOrder)
+            {
+                Debug.Log("Tea served successfully!");
+                statusText.text = "Tea served: " + brewedTea;
+            }
+            else
+            {
+                Debug.Log("Wrong order!");
+                statusText.text = "Wrong tea!";
+            }
+            brewingMachine.ClearTea();
         }
     }
 }
