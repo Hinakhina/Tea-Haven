@@ -1,70 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-    
+﻿using UnityEngine;
+
 public class MenuButton : MonoBehaviour
 {
-    private GameManager gameManager;
-
-    [SerializeField] GameObject creditScreen; // No longer used directly
-    [SerializeField] GameObject exitingScreen; // No longer used directly
-
-    private void Start()
+    public void StartNewGame()
     {
-        // Find the GameManager in the scene
-        gameManager = FindObjectOfType<GameManager>();
-
-        if (gameManager == null)
-        {
-            Debug.LogError("GameManager not found in the scene!");
-        }
+        GameManager.Instance.StartNewGame();
     }
 
-    public void NewGameButton()
+    public void ContinueGame()
     {
-        // Calls GameManager's StartNewGame method
-        gameManager?.StartNewGame();
+        GameManager.Instance.ContinueGame();
     }
 
-    public void ContinueButton()
+    public void OpenSettings()
     {
-        // Calls GameManager's ContinueGame method
-        gameManager?.ContinueGame();
+        GameManager.Instance.OpenSettings();
     }
 
-    public void SettingsButton()
+    public void ShowCredits()
     {
-        // Calls GameManager's OpenSettings method
-        gameManager?.OpenSettings();
+        GameManager.Instance.UIManager.ShowCredits();  // ✅ FIXED
     }
 
-    public void CreditsButton()
+    public void CloseCredits()
     {
-        // Calls GameManager's ShowCredits method
-        gameManager?.ShowCredits();
+        GameManager.Instance.UIManager.CloseCredits(); // ✅ FIXED
     }
 
-    public void CloseCreditsButton()
+    public void ShowExitConfirmation()
     {
-        // Calls GameManager's CloseCredits method
-        gameManager?.CloseCredits();
+        GameManager.Instance.UIManager.ShowExitConfirmation(); // ✅ FIXED
     }
 
-    public void ExitButton()
+    public void CancelExit()
     {
-        // Calls GameManager's ShowExitConfirmation method
-        gameManager?.ShowExitConfirmation();
+        GameManager.Instance.UIManager.CancelExit(); // ✅ FIXED
     }
 
-    public void NoExitButton()
+    public void ExitGame()
     {
-        // Calls GameManager's CancelExit method
-        gameManager?.CancelExit();
-    }
-
-    public void YesExitButton()
-    {
-        // Calls GameManager's ExitGame method
-        gameManager?.ExitGame();
+        GameManager.Instance.ExitGame();
     }
 }

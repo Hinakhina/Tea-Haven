@@ -3,53 +3,48 @@ using UnityEngine;
 
 public class BrewingMachine : MonoBehaviour
 {
-    private string selectedTeaType;
-    private bool isBrewing;
+    private string selectedTea;
+    private bool isBrewing = false;
 
     public void SetTeaType(string teaType)
     {
-        selectedTeaType = teaType;
-        Debug.Log("Tea type selected: " + teaType);
+        selectedTea = teaType;
+        GameManager.Instance.UIManager.UpdateStatusText("Selected: " + teaType);
     }
 
     public bool HasTea()
     {
-        return !string.IsNullOrEmpty(selectedTeaType);
+        return !string.IsNullOrEmpty(selectedTea);
     }
 
     public void StartBrewing()
     {
-        if (HasTea() && !isBrewing)
+        if (!isBrewing && HasTea())
         {
             isBrewing = true;
+            GameManager.Instance.UIManager.UpdateStatusText("Brewing...");
             StartCoroutine(BrewingProcess());
         }
         else
         {
-            Debug.Log("No tea selected or already brewing.");
+            GameManager.Instance.UIManager.UpdateStatusText("Select tea leaves first!");
         }
     }
 
     private IEnumerator BrewingProcess()
     {
-        Debug.Log("Brewing started...");
         yield return new WaitForSeconds(3);
-        Debug.Log("Brewing complete!");
+        GameManager.Instance.UIManager.UpdateStatusText("Brewing complete!");
         isBrewing = false;
     }
 
     public string GetBrewedTea()
     {
-        if (!isBrewing && HasTea())
-        {
-            return selectedTeaType;
-        }
-        return null;
+        return selectedTea;
     }
 
     public void ClearTea()
     {
-        selectedTeaType = null;
-        Debug.Log("Tea cleared from machine.");
+        selectedTea = null;
     }
 }
