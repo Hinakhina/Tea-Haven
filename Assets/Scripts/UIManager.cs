@@ -20,22 +20,50 @@ public class UIManager : MonoBehaviour
 
     public void ShowCredits()
     {
-        creditScreen.SetActive(true);
+        if (creditScreen != null)
+        {
+            creditScreen.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("creditScreen is not assigned in UIManager!");
+        }
     }
 
     public void CloseCredits()
     {
-        creditScreen.SetActive(false);
+        if (creditScreen != null)
+        {
+            creditScreen.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("creditScreen is not assigned in UIManager!");
+        }
     }
 
     public void ShowExitConfirmation()
     {
-        exitingScreen.SetActive(true);
+        if (exitingScreen != null)
+        {
+            exitingScreen.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("exitingScreen is not assigned in UIManager!");
+        }
     }
 
     public void CancelExit()
     {
-        exitingScreen.SetActive(false);
+        if (exitingScreen != null)
+        {
+            exitingScreen.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("exitingScreen is not assigned in UIManager!");
+        }
     }
 
     public void UpdateStatusText(string message)
@@ -44,6 +72,10 @@ public class UIManager : MonoBehaviour
         {
             statusText.text = message;
         }
+        else
+        {
+            Debug.LogWarning("statusText is not assigned in UIManager!");
+        }
     }
 
     public void UpdateTeaImage(Sprite teaSprite)
@@ -51,6 +83,10 @@ public class UIManager : MonoBehaviour
         if (teaCupImage != null)
         {
             teaCupImage.sprite = teaSprite;
+        }
+        else
+        {
+            Debug.LogWarning("teaCupImage is not assigned in UIManager!");
         }
     }
 }
