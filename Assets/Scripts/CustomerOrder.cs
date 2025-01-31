@@ -1,7 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
 
-public class CustomerOrder
+public class CustomerOrder : MonoBehaviour
 {
-    public string TeaType;
-    public List<string> AddOns = new List<string>();
+    private string[] teaOrders = { "Green Tea", "Black Tea", "Oolong Tea", "Chamomile Tea" };
+    private string currentOrder;
+
+    private UIManager uiManager;
+
+    private void Start()
+    {
+        uiManager = FindObjectOfType<UIManager>(); // Get UIManager reference
+        AssignRandomOrder();
+    }
+
+    private void AssignRandomOrder()
+    {
+        currentOrder = teaOrders[Random.Range(0, teaOrders.Length)];
+        Debug.Log("Customer ordered: " + currentOrder);
+
+        if (uiManager != null)
+        {
+            uiManager.UpdateStatusText("Order: " + currentOrder);
+        }
+    }
+
+    public string GetOrder()
+    {
+        return currentOrder;
+    }
 }
