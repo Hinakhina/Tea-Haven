@@ -1,24 +1,30 @@
 using UnityEngine;
+using System.Collections;
 
 public class CustomerMovement : MonoBehaviour
 {
-    public Transform stopPosition; // The point where the customer stops
-    public float speed = 2f; // Movement speed
+    public Vector3 startPosition;  // Off-screen starting point
+    public Vector3 orderPosition;  // Where they stop to order
+    public float moveSpeed = 2f;   // Speed of movement
 
-    private bool isMoving = true;
+    public delegate void CustomerArrivedHandler();
+    public event CustomerArrivedHandler OnCustomerArrived; // Event for when the customer stops
 
-    void Update()
+    private void Start()
     {
-        if (isMoving)
-        {
-            // Move towards the stop position
-            transform.position = Vector2.MoveTowards(transform.position, stopPosition.position, speed * Time.deltaTime);
+        transform.position = startPosition;
+        StartCoroutine(MoveToPosition(orderPosition));
+    }
 
-            // Stop moving when reaching the stop position
-            if (Vector2.Distance(transform.position, stopPosition.position) < 0.1f)
-            {
-                isMoving = false;
-            }
+    private IEnumerator MoveToPosition(Vector3 target)
+    {
+        while (Vector3.Distance(transform.position, target) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+            yield return null;
         }
+
+        // Customer has arrived, trigger the event
+        OnCustomerArrived?.Invoke();
     }
 }
