@@ -4,17 +4,17 @@ public class CustomerOrder : MonoBehaviour
 {
     private string[] teaOrders = { "Green Tea", "Black Tea", "Oolong Tea", "Chamomile Tea" };
     private string currentOrder;
-    private UIManager uiManager;
+    private GameplayUIManager gpuiManager;
     private CustomerMovement customerMovement;
 
     private void Start()
     {
-        uiManager = FindObjectOfType<UIManager>(); // Get UIManager reference
-        customerMovement = GetComponent<CustomerMovement>(); // Get CustomerMovement reference
+        gpuiManager = FindObjectOfType<GameplayUIManager>();
+        customerMovement = GetComponent<CustomerMovement>();
 
         if (customerMovement != null)
         {
-            customerMovement.OnCustomerArrived += AssignRandomOrder; // Wait until arrival to order
+            customerMovement.OnCustomerArrived += AssignRandomOrder;
         }
     }
 
@@ -23,9 +23,9 @@ public class CustomerOrder : MonoBehaviour
         currentOrder = teaOrders[Random.Range(0, teaOrders.Length)];
         Debug.Log("Customer ordered: " + currentOrder);
 
-        if (uiManager != null)
+        if (gpuiManager != null)
         {
-            uiManager.ShowTeaBrewingPanel(currentOrder);
+            gpuiManager.ShowTeaBrewingPanel(currentOrder);
         }
     }
 
