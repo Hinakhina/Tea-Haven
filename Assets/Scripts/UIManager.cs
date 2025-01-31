@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
         if (mainMenu != null) mainMenu.SetActive(true);
         if (creditScreen != null) creditScreen.SetActive(false);
         if (exitingScreen != null) exitingScreen.SetActive(false);
+
     }
 
     public void ShowCredits()

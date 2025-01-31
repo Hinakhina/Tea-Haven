@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -20,6 +21,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        FindSceneReferences();
+    }
+
+    public void FindSceneReferences()
+    {
         // Find UIManager and BrewingMachine in the scene
         UIManager = FindObjectOfType<UIManager>();
         BrewingMachine = FindObjectOfType<BrewingMachine>();
@@ -34,6 +40,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("BrewingMachine not found in the scene!");
         }
     }
+
 
     public void StartNewGame()
     {
