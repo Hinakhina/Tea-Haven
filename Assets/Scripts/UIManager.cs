@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class UIManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -21,8 +23,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject creditScreen;
     [SerializeField] private GameObject exitingScreen;
 
-    [SerializeField] private GameObject orderPanel;
-    [SerializeField] private Text statusText;
+    [SerializeField] private GameObject teaBrewingPanel;
+    [SerializeField] private TMP_Text statusText;
     [SerializeField] private Image teaCupImage;
 
     private void Start()
@@ -77,6 +79,27 @@ public class UIManager : MonoBehaviour
         else
         {
             Debug.LogWarning("exitingScreen is not assigned in UIManager!");
+        }
+    }
+
+    public void ShowTeaBrewingPanel(string teaOrder)
+    {
+        if (teaBrewingPanel != null)
+        {
+            teaBrewingPanel.SetActive(true);
+        }
+
+        if (statusText != null)
+        {
+            statusText.text = "Order: " + teaOrder;
+        }
+    }
+
+    public void HideTeaBrewingPanel()
+    {
+        if (teaBrewingPanel != null)
+        {
+            teaBrewingPanel.SetActive(false);
         }
     }
 

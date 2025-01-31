@@ -25,7 +25,7 @@ public class CustomerOrder : MonoBehaviour
 
         if (uiManager != null)
         {
-            uiManager.UpdateStatusText("Order: " + currentOrder);
+            uiManager.ShowTeaBrewingPanel(currentOrder);
         }
     }
 
