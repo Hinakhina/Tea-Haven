@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/BackUpScenes/VirlyMainMenu.unity
     guid: c0d84e26ec2d52d40b04aaabf42c2201
   - enabled: 1
     path: Assets/Scenes/GamePlay.unity
@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SettingsPage.unity
     guid: de0ac06815086b04f84b46d85fafc893
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7faf45eed639643458910eb3fcd644f4
   m_configObjects: {}

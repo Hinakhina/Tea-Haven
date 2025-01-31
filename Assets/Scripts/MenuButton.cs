@@ -1,58 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class MenuButton : MonoBehaviour
 {
-    [SerializeField] GameObject creditScreen;
-    [SerializeField] GameObject exitingScreen;
-
-    public void Start(){
-        creditScreen.SetActive(false);
-        exitingScreen.SetActive(false);
+    public void StartNewGame()
+    {
+        GameManager.Instance.StartNewGame();
     }
 
-    // Start is called before the first frame update
-    public void NewGameButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        SceneManager.LoadScene("GamePlay");
-        Debug.Log("Start a new game...");
+    public void ContinueGame()
+    {
+        GameManager.Instance.ContinueGame();
     }
 
-    public void ContinueButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        SceneManager.LoadScene("GamePlay");
+    public void OpenSettings()
+    {
+        GameManager.Instance.OpenSettings();
     }
 
-    public void SettingsButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        SceneManager.LoadScene("SettingsPage");
+    public void ShowCredits()
+    {
+        GameManager.Instance.UIManager.ShowCredits();  // ✅ FIXED
     }
 
-    public void CreditsButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        creditScreen.SetActive(true);
-        
+    public void CloseCredits()
+    {
+        GameManager.Instance.UIManager.CloseCredits(); // ✅ FIXED
     }
 
-    public void CloseCreditsButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        creditScreen.SetActive(false);
+    public void ShowExitConfirmation()
+    {
+        GameManager.Instance.UIManager.ShowExitConfirmation(); // ✅ FIXED
     }
 
-    public void ExitButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        exitingScreen.SetActive(true);
+    public void CancelExit()
+    {
+        GameManager.Instance.UIManager.CancelExit(); // ✅ FIXED
     }
 
-    public void NoExitButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        exitingScreen.SetActive(false);
-    }
-
-    public void YesExitButton(){
-        //AudioManager.Instance.PlaySFX("Nama Sound");
-        Application.Quit(); //exit apps
+    public void ExitGame()
+    {
+        GameManager.Instance.ExitGame();
     }
 }
