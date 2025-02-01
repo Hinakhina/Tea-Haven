@@ -6,34 +6,32 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public UIManager UIManager { get; private set; }
-    public BrewingMachine BrewingMachine { get; private set; }
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
-            return;
         }
+        FindSceneReferences();
+    }
 
+    public void FindSceneReferences()
+    {
         // Find UIManager and BrewingMachine in the scene
         UIManager = FindObjectOfType<UIManager>();
-        BrewingMachine = FindObjectOfType<BrewingMachine>();
 
         if (UIManager == null)
         {
             Debug.LogError("UIManager not found in the scene!");
         }
-
-        if (BrewingMachine == null)
-        {
-            Debug.LogError("BrewingMachine not found in the scene!");
-        }
     }
+
 
     public void StartNewGame()
     {

@@ -1898,32 +1898,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1904467088}
-  - component: {fileID: 1904467087}
+  - component: {fileID: 1904467089}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: GameplayUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1904467087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1904467086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4d8595b472b104c86cf2de2142d59e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenu: {fileID: 0}
-  creditScreen: {fileID: 0}
-  exitingScreen: {fileID: 0}
-  teaBrewingPanel: {fileID: 330145398}
-  statusText: {fileID: 990222773}
-  teaCupImage: {fileID: 457989006}
 --- !u!4 &1904467088
 Transform:
   m_ObjectHideFlags: 0
@@ -1939,6 +1921,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1904467089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904467086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8971693c42b8c45b73aa53c6150de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusText: {fileID: 990222773}
+  teaBrewingPanel: {fileID: 330145398}
 --- !u!1 &1908820061
 GameObject:
   m_ObjectHideFlags: 0
