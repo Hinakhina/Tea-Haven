@@ -1,50 +1,46 @@
-﻿//using System.Collections;
-//using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-//public class BrewingMachine : MonoBehaviour
-//{
-//    private string selectedTea;
-//    private bool isBrewing = false;
+public class BrewingMachine : MonoBehaviour
+{
+    public static BrewingMachine Instance { get; private set; }
 
-//    public void SetTeaType(string teaType)
-//    {
-//        selectedTea = teaType;
-//        GameManager.Instance.UIManager.UpdateStatusText("Selected: " + teaType);
-//    }
+    [SerializeField] private float brewingTime = 3f;
+    private bool isBrewing = false;
+    private GameplayUIManager uiManager;
 
-//    public bool HasTea()
-//    {
-//        return !string.IsNullOrEmpty(selectedTea);
-//    }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
-//    public void StartBrewing()
-//    {
-//        if (!isBrewing && HasTea())
-//        {
-//            isBrewing = true;
-//            GameManager.Instance.UIManager.UpdateStatusText("Brewing...");
-//            StartCoroutine(BrewingProcess());
-//        }
-//        else
-//        {
-//            GameManager.Instance.UIManager.UpdateStatusText("Select tea leaves first!");
-//        }
-//    }
+    private void Start()
+    {
+        uiManager = GameplayUIManager.Instance;
+    }
 
-//    private IEnumerator BrewingProcess()
-//    {
-//        yield return new WaitForSeconds(3);
-//        GameManager.Instance.UIManager.UpdateStatusText("Brewing complete!");
-//        isBrewing = false;
-//    }
+    public void StartBrewing()
+    {
+        if (!isBrewing)
+        {
+            StartCoroutine(BrewTea());
+        }
+    }
 
-//    public string GetBrewedTea()
-//    {
-//        return selectedTea;
-//    }
-
-//    public void ClearTea()
-//    {
-//        selectedTea = null;
-//    }
-//}
+    private IEnumerator BrewTea()
+    {
+        isBrewing = true;
+        uiManager.ShowSuccessMessage("Brewing in progress...");
+        yield return new WaitForSeconds(brewingTime);
+        uiManager.ShowSuccessMessage("Tea is ready!");
+        isBrewing = false;
+    }
+}

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CustomerOrder : MonoBehaviour
 {
     private string[] teaOrders = { "Green Tea", "Black Tea", "Oolong Tea", "Chamomile Tea" };
-    private string currentOrder;
+    private List<string> currentOrder = new List<string>();
     private GameplayUIManager gpuiManager;
     private CustomerMovement customerMovement;
 
@@ -20,17 +21,18 @@ public class CustomerOrder : MonoBehaviour
 
     private void AssignRandomOrder()
     {
-        currentOrder = teaOrders[Random.Range(0, teaOrders.Length)];
-        Debug.Log("Customer ordered: " + currentOrder);
+        currentOrder.Clear();
+        currentOrder.Add(teaOrders[Random.Range(0, teaOrders.Length)]);
+        Debug.Log("Customer ordered: " + string.Join(", ", currentOrder));
 
         if (gpuiManager != null)
         {
-            gpuiManager.ShowTeaBrewingPanel(currentOrder);
+            gpuiManager.ShowTeaBrewingPanel(new List<string>(currentOrder));
         }
     }
 
-    public string GetOrder()
+    public List<string> GetOrder()
     {
-        return currentOrder;
+        return new List<string>(currentOrder);
     }
 }
