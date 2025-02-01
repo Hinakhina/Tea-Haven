@@ -43,11 +43,6 @@ public class GameplayUIManager : MonoBehaviour
         }
     }
 
-    private bool IsCorrectOrder()
-    {
-        return selectedIngredients.Count > 0 && string.Join(", ", selectedIngredients) == currentOrder;
-    }
-
     public void HideTeaBrewingPanel()
     {
         if (teaBrewingPanel != null)
