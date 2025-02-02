@@ -42,14 +42,17 @@ public class GameplayUIManager : MonoBehaviour
 
     public void ShowTeaBrewingPanel(string teaName, List<string> orderIngredients)
     {
+        Debug.Log($"ShowTeaBrewingPanel called with tea: {teaName}");
+        Debug.Log($"Received ingredients: {string.Join(", ", orderIngredients)}");
         if (teaBrewingPanel != null)
         {
             teaBrewingPanel.SetActive(true);
         }
         if (statusText != null)
         {
-            statusText.text = "Order: " + string.Join(", ", teaName);
+            statusText.text = "Order: " + teaName;
         }
+        Debug.Log($"Setting current order to: {string.Join(", ", orderIngredients)}");
         currentOrder = new List<string>(orderIngredients);
         selectedIngredients.Clear();
     }
@@ -74,7 +77,7 @@ public class GameplayUIManager : MonoBehaviour
     public void ClearSelectedIngredients()
     {
         selectedIngredients.Clear();
-        UpdateSelectedIngredientsUI(); // Refresh the UI
+        UpdateSelectedIngredientsUI();
     }
 
     public void ConfirmTea()
@@ -125,24 +128,29 @@ public class GameplayUIManager : MonoBehaviour
             ShowErrorMessage("Incorrect ingredients!");
         }
 
-        // Notify the customer
         FindObjectOfType<CustomerOrder>().ReceiveTea(isCorrect);
     }
     private bool IsCorrectOrder(List<string> brewingIngredients)
     {
-        Debug.Log("Comparing orders:");
-        Debug.Log($"Selected count: {brewingIngredients.Count}, Current order count: {currentOrder.Count}");
+        Debug.Log("===== Order Comparison =====");
+        Debug.Log($"Selected ingredients ({brewingIngredients.Count}): {string.Join(", ", brewingIngredients)}");
+        Debug.Log($"Expected ingredients ({currentOrder.Count}): {string.Join(", ", currentOrder)}");
         if (brewingIngredients.Count != currentOrder.Count)
+        {
+            Debug.Log($"Count mismatch! Selected: {brewingIngredients.Count}, Expected: {currentOrder.Count}");
             return false;
-
-        Debug.Log("Sorted Selected: " + string.Join(", ", brewingIngredients));
-        Debug.Log("Sorted Order: " + string.Join(", ", currentOrder));
+        }
 
         for (int i = 0; i < brewingIngredients.Count; i++)
         {
+            Debug.Log($"Comparing position {i}: Selected '{brewingIngredients[i]}' vs Expected '{currentOrder[i]}'");
             if (brewingIngredients[i] != currentOrder[i])
+            {
+                Debug.Log($"Mismatch at position {i}");
                 return false;
+            }
         }
+        Debug.Log("All ingredients match!");
         return true;
     }
 

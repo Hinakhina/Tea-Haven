@@ -7,17 +7,19 @@ public class CustomerOrder : MonoBehaviour
 {
     [SerializeField] private List<string> orderIngredients = new List<string>();
     [SerializeField] private TMP_Text orderText;
+    [SerializeField] private CustomerSpawner customerSpawner;
     [SerializeField] private float leaveDelay = 2f;
+    [SerializeField] private GameplayUIManager gpuiManager;
+    [SerializeField] private CustomerMovement customerMovement;
 
     private string[] teaOrders = { "Chrysantemum Tea", "Green Tea", "Oolong Tea", "Lavender Tea" };
     private string currentOrder;
-    private GameplayUIManager gpuiManager;
-    private CustomerMovement customerMovement;
 
     private void Start()
     {
         gpuiManager = FindObjectOfType<GameplayUIManager>();
         customerMovement = GetComponent<CustomerMovement>();
+        customerSpawner = FindObjectOfType<CustomerSpawner>();
 
         if (customerMovement != null)
         {
@@ -30,9 +32,22 @@ public class CustomerOrder : MonoBehaviour
         currentOrder = order.teaName;
         orderIngredients = new List<string>(order.ingredients);
 
+        if (orderText != null)
+        {
+            orderText.text = "Order: " + currentOrder;
+        }
+        else
+        {
+            Debug.LogError("OrderText is not assigned in the inspector!");
+        }
+
         if (gpuiManager != null)
         {
             gpuiManager.ShowTeaBrewingPanel(currentOrder, orderIngredients);
+        }
+        else
+        {
+            Debug.LogError("gpuiManager is null in CustomerOrder!");
         }
     }
 
@@ -52,20 +67,19 @@ public class CustomerOrder : MonoBehaviour
         if (isCorrect)
         {
             GameplayUIManager.Instance.ShowSuccessMessage("Customer: Thank you!");
-            StartCoroutine(LeaveCustomer());
         }
         else
         {
             GameplayUIManager.Instance.ShowErrorMessage("Customer: This is wrong!");
-            // rn customer doesnt leave after getting wrong order. kalo mau bikin dia leave tambahin line of code disni
-            StartCoroutine(LeaveCustomer());
         }
+        StartCoroutine(LeaveCustomer());
+        // rn customer leaves no matter what tea u brewed
     }
 
     private IEnumerator LeaveCustomer()
     {
         yield return new WaitForSeconds(leaveDelay);
         Destroy(gameObject);
-        CustomerSpawner.Instance.SpawnNewCustomer(); // spawn new customer
+        CustomerSpawner.Instance.CustomerLeft();
     }
 }

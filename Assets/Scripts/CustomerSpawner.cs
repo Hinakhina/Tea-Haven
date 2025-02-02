@@ -7,10 +7,10 @@ public class CustomerSpawner : MonoBehaviour
 
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private int maxCustomers = 5;
+    [SerializeField] private int maxCustomers = 1;
     private int currentCustomers = 0;
 
-    private Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
+    public Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
     {
         { "Chrysantemum Tea", new List<string> { "Chrysantemum Tea Leaves", "Hot Water" } },
         { "Green Tea", new List<string> { "Matcha Powder", "Hot Water" } },
@@ -52,18 +52,22 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         currentCustomers++;
+        Debug.Log("Spawned new customer. Current count: " + currentCustomers);
     }
 
     private (string, List<string>) GetRandomOrder()
     {
         List<string> teaNames = new List<string>(teaRecipes.Keys);
         string randomTea = teaNames[Random.Range(0, teaNames.Count)];
-        return (randomTea, teaRecipes[randomTea]);
+        var ingredients = teaRecipes[randomTea];
+        Debug.Log($"GetRandomOrder: Selected {randomTea} with ingredients: {string.Join(", ", ingredients)}");
+        return (randomTea, ingredients);
     }
 
     public void CustomerLeft()
     {
         currentCustomers--;
+        Debug.Log("Customer left. Current count: " + currentCustomers);
         SpawnNewCustomer();
     }
 }
