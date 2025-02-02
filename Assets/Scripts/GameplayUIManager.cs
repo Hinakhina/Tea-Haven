@@ -136,17 +136,12 @@ public class GameplayUIManager : MonoBehaviour
         if (brewingIngredients.Count != currentOrder.Count)
             return false;
 
-        List<string> sortedSelected = new List<string>(brewingIngredients);
-        List<string> sortedOrder = new List<string>(currentOrder);
-        sortedSelected.Sort();
-        sortedOrder.Sort();
+        Debug.Log("Sorted Selected: " + string.Join(", ", brewingIngredients));
+        Debug.Log("Sorted Order: " + string.Join(", ", currentOrder));
 
-        Debug.Log("Sorted Selected: " + string.Join(", ", sortedSelected));
-        Debug.Log("Sorted Order: " + string.Join(", ", sortedOrder));
-
-        for (int i = 0; i < sortedSelected.Count; i++)
+        for (int i = 0; i < brewingIngredients.Count; i++)
         {
-            if (sortedSelected[i] != sortedOrder[i])
+            if (brewingIngredients[i] != currentOrder[i])
                 return false;
         }
         return true;
