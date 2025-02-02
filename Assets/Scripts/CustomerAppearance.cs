@@ -2,8 +2,8 @@
 
 public class CustomerAppearance : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer; // Drag the SpriteRenderer here
-    [SerializeField] private Sprite[] customerSprites; // Drag multiple sprites here
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] customerSprites;
 
     private void Start()
     {
@@ -11,5 +11,17 @@ public class CustomerAppearance : MonoBehaviour
         {
             spriteRenderer.sprite = customerSprites[Random.Range(0, customerSprites.Length)];
         }
+        spriteRenderer.enabled = true;
+        Debug.Log("Customer sprite enabled: " + spriteRenderer.enabled);
     }
+
+    private void OnEnable()
+    {
+        if (spriteRenderer != null && customerSprites.Length > 0)
+        {
+            spriteRenderer.sprite = customerSprites[Random.Range(0, customerSprites.Length)];
+            spriteRenderer.enabled = true;
+        }
+    }
+
 }
