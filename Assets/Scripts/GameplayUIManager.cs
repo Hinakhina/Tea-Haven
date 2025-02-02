@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameplayUIManager : MonoBehaviour
 {
@@ -9,14 +10,19 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private GameObject teaBrewingPanel;
     [SerializeField] private TMP_Text messageText;
+    [SerializeField] private UnityEngine.UI.Slider brewingProgressBar;
+    [SerializeField] private float brewingTime = 3f;
     [SerializeField] private List<string> availableIngredients;
+    [SerializeField] private TMP_Text selectedIngredientsText;
+
     private List<string> selectedIngredients = new List<string>();
-    private string currentOrder;
+    private List<string> currentOrder = new List<string>();
 
     private void Awake()
     {
         if (Instance == null)
         {
+            availableIngredients = new List<string> { "Tea", "Sugar", "Milk", "Matcha Powder" }; // add more ingredients here 
             Instance = this;
         }
         else
@@ -34,13 +40,111 @@ public class GameplayUIManager : MonoBehaviour
         }
     }
 
-    public void ShowTeaBrewingPanel(string tea)
+    public void ShowTeaBrewingPanel(string teaName, List<string> orderIngredients)
     {
         if (teaBrewingPanel != null)
         {
             teaBrewingPanel.SetActive(true);
-            statusText.text = tea;
         }
+        if (statusText != null)
+        {
+            statusText.text = "Order: " + string.Join(", ", teaName);
+        }
+        currentOrder = new List<string>(orderIngredients);
+        selectedIngredients.Clear();
+    }
+
+    public void SelectIngredient(string ingredient)
+    {
+        if (availableIngredients.Contains(ingredient))
+        {
+            selectedIngredients.Add(ingredient);
+            UpdateSelectedIngredientsUI();
+        }
+    }
+
+    private void UpdateSelectedIngredientsUI()
+    {
+        if (selectedIngredientsText != null)
+        {
+            selectedIngredientsText.text = "Selected Ingredients: " + string.Join(", ", selectedIngredients);
+        }
+    }
+
+    public void ClearSelectedIngredients()
+    {
+        selectedIngredients.Clear();
+        UpdateSelectedIngredientsUI(); // Refresh the UI
+    }
+
+    public void ConfirmTea()
+    {
+        if (selectedIngredients.Count == 0)
+        {
+            ShowErrorMessage("No ingredients selected!");
+            return;
+        }
+
+        List<string> brewingIngredients = new List<string>(selectedIngredients);
+        Debug.Log("Comparing orders:");
+        Debug.Log($"Selected count: {brewingIngredients.Count}, Current order count: {currentOrder.Count}");
+
+        StartCoroutine(BrewTea(brewingIngredients));
+        Debug.Log("Selected Ingredients: " + string.Join(", ", selectedIngredients));
+        Debug.Log("Expected Ingredients: " + string.Join(", ", currentOrder));
+        selectedIngredients.Clear();
+        UpdateSelectedIngredientsUI();
+    }
+
+    private IEnumerator BrewTea(List<string> brewingIngredients)
+    {
+        if (brewingProgressBar != null)
+        {
+            brewingProgressBar.gameObject.SetActive(true);
+            brewingProgressBar.value = 0f;
+        }
+
+        float elapsedTime = 0f;
+        while (elapsedTime < brewingTime)
+        {
+            elapsedTime += Time.deltaTime;
+            if (brewingProgressBar != null)
+            {
+                brewingProgressBar.value = elapsedTime / brewingTime;
+            }
+            yield return null;
+        }
+
+        if (brewingProgressBar != null)
+        {
+            brewingProgressBar.gameObject.SetActive(false);
+        }
+
+        if (IsCorrectOrder(brewingIngredients))
+        {
+            ShowSuccessMessage("Tea prepared successfully!");
+        }
+        else
+        {
+            ShowErrorMessage("Incorrect ingredients!");
+        }
+    }
+    private bool IsCorrectOrder(List<string> brewingIngredients)
+    {
+        Debug.Log("Comparing orders:");
+        Debug.Log($"Selected count: {brewingIngredients.Count}, Current order count: {currentOrder.Count}");
+        if (brewingIngredients.Count != currentOrder.Count)
+            return false;
+
+        Debug.Log("Sorted Selected: " + string.Join(", ", brewingIngredients));
+        Debug.Log("Sorted Order: " + string.Join(", ", currentOrder));
+
+        for (int i = 0; i < brewingIngredients.Count; i++)
+        {
+            if (brewingIngredients[i] != currentOrder[i])
+                return false;
+        }
+        return true;
     }
 
     public void HideTeaBrewingPanel()

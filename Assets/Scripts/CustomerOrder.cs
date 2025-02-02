@@ -1,7 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CustomerOrder : MonoBehaviour
 {
+    [SerializeField] private List<string> orderIngredients = new List<string>();
+
+    private Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
+    {
+        { "Green Tea", new List<string> { "Tea", "Matcha Powder" } },
+        { "Black Tea", new List<string> { "Tea" } },
+        { "Oolong Tea", new List<string> { "Tea", "Sugar" } },
+        { "Chamomile Tea", new List<string> { "Tea", "Milk" } }
+    };
+
     private string[] teaOrders = { "Green Tea", "Black Tea", "Oolong Tea", "Chamomile Tea" };
     private string currentOrder;
     private GameplayUIManager gpuiManager;
@@ -20,17 +31,27 @@ public class CustomerOrder : MonoBehaviour
 
     private void AssignRandomOrder()
     {
-        currentOrder = teaOrders[Random.Range(0, teaOrders.Length)];
-        Debug.Log("Customer ordered: " + currentOrder);
+        int randomIndex = UnityEngine.Random.Range(0, teaOrders.Length);
+        currentOrder = teaOrders[randomIndex];
+        orderIngredients = new List<string>(teaRecipes[currentOrder]);
+        Debug.Log("Customer ordered: " + string.Join(", ", currentOrder));
+        Debug.Log("Selected Tea: " + currentOrder);
+        Debug.Log("Correct Ingredients: " + string.Join(", ", orderIngredients));
 
         if (gpuiManager != null)
         {
-            gpuiManager.ShowTeaBrewingPanel(currentOrder);
+            gpuiManager.ShowTeaBrewingPanel(currentOrder, orderIngredients);
         }
     }
 
-    public string GetOrder()
+    private string GetRandomTeaOrder()
     {
-        return currentOrder;
+        List<string> teaNames = new List<string>(teaRecipes.Keys);
+        return teaNames[Random.Range(0, teaNames.Count)];
+    }
+
+    public List<string> GetOrderIngredients()
+    {
+        return orderIngredients;
     }
 }
