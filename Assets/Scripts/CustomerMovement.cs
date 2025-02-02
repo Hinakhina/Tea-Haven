@@ -8,7 +8,7 @@ public class CustomerMovement : MonoBehaviour
     public float moveSpeed = 2f;   // Speed of movement
 
     public delegate void CustomerArrivedHandler();
-    public event CustomerArrivedHandler OnCustomerArrived; // Event for when the customer stops
+    public event CustomerArrivedHandler OnCustomerArrived;
 
     private void Start()
     {
@@ -24,7 +24,15 @@ public class CustomerMovement : MonoBehaviour
             yield return null;
         }
 
-        // Customer has arrived, trigger the event
         OnCustomerArrived?.Invoke();
+    }
+
+    public void ArriveAtCounter()
+    {
+        Debug.Log("CustomerMovement: Arrived at counter!");
+        if (OnCustomerArrived != null)
+        {
+            OnCustomerArrived.Invoke();
+        }
     }
 }

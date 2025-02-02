@@ -179,4 +179,12 @@ public class GameplayUIManager : MonoBehaviour
             messageText.color = Color.red;
         }
     }
+
+    public void removeMessage(string message)
+    {
+        if (messageText != null)
+        {
+            messageText.text = message;
+        }
+    }
 }
