@@ -13,6 +13,8 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Slider brewingProgressBar;
     [SerializeField] private float brewingTime = 3f;
     [SerializeField] private List<string> availableIngredients;
+    [SerializeField] private TMP_Text selectedIngredientsText;
+
     private List<string> selectedIngredients = new List<string>();
     private List<string> currentOrder = new List<string>();
 
@@ -20,6 +22,7 @@ public class GameplayUIManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            availableIngredients = new List<string> { "Tea", "Sugar", "Milk" }; // add more ingredients here 
             Instance = this;
         }
         else
@@ -56,12 +59,29 @@ public class GameplayUIManager : MonoBehaviour
         if (availableIngredients.Contains(ingredient))
         {
             selectedIngredients.Add(ingredient);
+            UpdateSelectedIngredientsUI();
         }
+    }
+
+    private void UpdateSelectedIngredientsUI()
+    {
+        if (selectedIngredientsText != null)
+        {
+            selectedIngredientsText.text = "Selected Ingredients: " + string.Join(", ", selectedIngredients);
+        }
+    }
+
+    public void ClearSelectedIngredients()
+    {
+        selectedIngredients.Clear();
+        UpdateSelectedIngredientsUI(); // Refresh the UI
     }
 
     public void ConfirmTea()
     {
         StartCoroutine(BrewTea());
+        selectedIngredients.Clear();
+        UpdateSelectedIngredientsUI();
     }
 
     private IEnumerator BrewTea()
