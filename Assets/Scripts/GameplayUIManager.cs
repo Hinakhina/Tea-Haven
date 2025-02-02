@@ -6,6 +6,7 @@ using System.Collections;
 public class GameplayUIManager : MonoBehaviour
 {
     public static GameplayUIManager Instance { get; private set; }
+    public PauseManager PauseManager { get; private set; }
 
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private GameObject teaBrewingPanel;
@@ -29,6 +30,13 @@ public class GameplayUIManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+
+        PauseManager = FindObjectOfType<PauseManager>();
+
+        if (PauseManager == null)
+        {
+            Debug.LogError("PauseManager not found in the scene!");
         }
     }
 
@@ -172,4 +180,6 @@ public class GameplayUIManager : MonoBehaviour
             messageText.color = Color.red;
         }
     }
+
+    
 }
