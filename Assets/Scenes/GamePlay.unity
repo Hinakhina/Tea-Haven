@@ -376,6 +376,8 @@ MonoBehaviour:
   orderText: {fileID: 990222773}
   customerSpawner: {fileID: 0}
   leaveDelay: 2
+  gpuiManager: {fileID: 0}
+  customerMovement: {fileID: 0}
 --- !u!114 &87798352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +393,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1208986075}
   customerSprites:
   - {fileID: 21300000, guid: 21ca2bd3a83aa7e41967925fd0407bda, type: 3}
+  - {fileID: 21300000, guid: 5d7bdd6ae7d274e4299e5768f8a1c51a, type: 3}
   - {fileID: 21300000, guid: 5d7bdd6ae7d274e4299e5768f8a1c51a, type: 3}
 --- !u!1 &96246676
 GameObject:
