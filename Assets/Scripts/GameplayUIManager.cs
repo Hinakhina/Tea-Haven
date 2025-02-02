@@ -188,5 +188,11 @@ public class GameplayUIManager : MonoBehaviour
         }
     }
 
-    
+    public void removeMessage(string message)
+    {
+        if (messageText != null)
+        {
+            messageText.text = message;
+        }
+    }
 }
