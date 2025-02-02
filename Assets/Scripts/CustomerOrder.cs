@@ -1,19 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 public class CustomerOrder : MonoBehaviour
 {
     [SerializeField] private List<string> orderIngredients = new List<string>();
+    [SerializeField] private TMP_Text orderText;
+    [SerializeField] private float leaveDelay = 2f;
 
-    private Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
-    {
-        { "Green Tea", new List<string> { "Tea", "Matcha Powder" } },
-        { "Black Tea", new List<string> { "Tea" } },
-        { "Oolong Tea", new List<string> { "Tea", "Sugar" } },
-        { "Chamomile Tea", new List<string> { "Tea", "Milk" } }
-    };
-
-    private string[] teaOrders = { "Green Tea", "Black Tea", "Oolong Tea", "Chamomile Tea" };
+    private string[] teaOrders = { "Chrysantemum Tea", "Green Tea", "Oolong Tea", "Lavender Tea" };
     private string currentOrder;
     private GameplayUIManager gpuiManager;
     private CustomerMovement customerMovement;
@@ -25,18 +21,14 @@ public class CustomerOrder : MonoBehaviour
 
         if (customerMovement != null)
         {
-            customerMovement.OnCustomerArrived += AssignRandomOrder;
+            customerMovement.OnCustomerArrived += DisplayOrder;
         }
     }
 
-    private void AssignRandomOrder()
+    public void AssignOrder((string teaName, List<string> ingredients) order)
     {
-        int randomIndex = UnityEngine.Random.Range(0, teaOrders.Length);
-        currentOrder = teaOrders[randomIndex];
-        orderIngredients = new List<string>(teaRecipes[currentOrder]);
-        Debug.Log("Customer ordered: " + string.Join(", ", currentOrder));
-        Debug.Log("Selected Tea: " + currentOrder);
-        Debug.Log("Correct Ingredients: " + string.Join(", ", orderIngredients));
+        currentOrder = order.teaName;
+        orderIngredients = new List<string>(order.ingredients);
 
         if (gpuiManager != null)
         {
@@ -44,14 +36,36 @@ public class CustomerOrder : MonoBehaviour
         }
     }
 
-    private string GetRandomTeaOrder()
+    private void DisplayOrder()
     {
-        List<string> teaNames = new List<string>(teaRecipes.Keys);
-        return teaNames[Random.Range(0, teaNames.Count)];
+        Debug.Log("Customer ordered: " + currentOrder);
+        Debug.Log("Correct Ingredients: " + string.Join(", ", orderIngredients));
     }
 
     public List<string> GetOrderIngredients()
     {
         return orderIngredients;
+    }
+
+    public void ReceiveTea(bool isCorrect)
+    {
+        if (isCorrect)
+        {
+            GameplayUIManager.Instance.ShowSuccessMessage("Customer: Thank you!");
+            StartCoroutine(LeaveCustomer());
+        }
+        else
+        {
+            GameplayUIManager.Instance.ShowErrorMessage("Customer: This is wrong!");
+            // rn customer doesnt leave after getting wrong order. kalo mau bikin dia leave tambahin line of code disni
+            StartCoroutine(LeaveCustomer());
+        }
+    }
+
+    private IEnumerator LeaveCustomer()
+    {
+        yield return new WaitForSeconds(leaveDelay);
+        Destroy(gameObject);
+        CustomerSpawner.Instance.SpawnNewCustomer(); // spawn new customer
     }
 }

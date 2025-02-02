@@ -22,7 +22,7 @@ public class GameplayUIManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            availableIngredients = new List<string> { "Tea", "Sugar", "Milk", "Matcha Powder" }; // add more ingredients here 
+            availableIngredients = new List<string> { "Chrysantemum Tea Leaves", "Sugar", "Hot Water", "Matcha Powder", "Oolong Tea Leaves", "Lavender Tea Leaves" }; // add more ingredients here 
             Instance = this;
         }
         else
@@ -86,12 +86,7 @@ public class GameplayUIManager : MonoBehaviour
         }
 
         List<string> brewingIngredients = new List<string>(selectedIngredients);
-        Debug.Log("Comparing orders:");
-        Debug.Log($"Selected count: {brewingIngredients.Count}, Current order count: {currentOrder.Count}");
-
         StartCoroutine(BrewTea(brewingIngredients));
-        Debug.Log("Selected Ingredients: " + string.Join(", ", selectedIngredients));
-        Debug.Log("Expected Ingredients: " + string.Join(", ", currentOrder));
         selectedIngredients.Clear();
         UpdateSelectedIngredientsUI();
     }
@@ -120,7 +115,8 @@ public class GameplayUIManager : MonoBehaviour
             brewingProgressBar.gameObject.SetActive(false);
         }
 
-        if (IsCorrectOrder(brewingIngredients))
+        bool isCorrect = IsCorrectOrder(brewingIngredients);
+        if (isCorrect)
         {
             ShowSuccessMessage("Tea prepared successfully!");
         }
@@ -128,6 +124,9 @@ public class GameplayUIManager : MonoBehaviour
         {
             ShowErrorMessage("Incorrect ingredients!");
         }
+
+        // Notify the customer
+        FindObjectOfType<CustomerOrder>().ReceiveTea(isCorrect);
     }
     private bool IsCorrectOrder(List<string> brewingIngredients)
     {
