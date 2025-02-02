@@ -22,7 +22,7 @@ public class GameplayUIManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            availableIngredients = new List<string> { "Tea", "Sugar", "Milk" }; // add more ingredients here 
+            availableIngredients = new List<string> { "Tea", "Sugar", "Milk", "Matcha Powder" }; // add more ingredients here 
             Instance = this;
         }
         else
@@ -40,7 +40,7 @@ public class GameplayUIManager : MonoBehaviour
         }
     }
 
-    public void ShowTeaBrewingPanel(List<string> order)
+    public void ShowTeaBrewingPanel(string teaName, List<string> orderIngredients)
     {
         if (teaBrewingPanel != null)
         {
@@ -48,9 +48,9 @@ public class GameplayUIManager : MonoBehaviour
         }
         if (statusText != null)
         {
-            statusText.text = "Order: " + string.Join(", ", order);
+            statusText.text = "Order: " + string.Join(", ", teaName);
         }
-        currentOrder = new List<string>(order);
+        currentOrder = new List<string>(orderIngredients);
         selectedIngredients.Clear();
     }
 
@@ -79,12 +79,24 @@ public class GameplayUIManager : MonoBehaviour
 
     public void ConfirmTea()
     {
-        StartCoroutine(BrewTea());
+        if (selectedIngredients.Count == 0)
+        {
+            ShowErrorMessage("No ingredients selected!");
+            return;
+        }
+
+        List<string> brewingIngredients = new List<string>(selectedIngredients);
+        Debug.Log("Comparing orders:");
+        Debug.Log($"Selected count: {brewingIngredients.Count}, Current order count: {currentOrder.Count}");
+
+        StartCoroutine(BrewTea(brewingIngredients));
+        Debug.Log("Selected Ingredients: " + string.Join(", ", selectedIngredients));
+        Debug.Log("Expected Ingredients: " + string.Join(", ", currentOrder));
         selectedIngredients.Clear();
         UpdateSelectedIngredientsUI();
     }
 
-    private IEnumerator BrewTea()
+    private IEnumerator BrewTea(List<string> brewingIngredients)
     {
         if (brewingProgressBar != null)
         {
@@ -108,7 +120,7 @@ public class GameplayUIManager : MonoBehaviour
             brewingProgressBar.gameObject.SetActive(false);
         }
 
-        if (IsCorrectOrder())
+        if (IsCorrectOrder(brewingIngredients))
         {
             ShowSuccessMessage("Tea prepared successfully!");
         }
@@ -117,15 +129,20 @@ public class GameplayUIManager : MonoBehaviour
             ShowErrorMessage("Incorrect ingredients!");
         }
     }
-    private bool IsCorrectOrder()
+    private bool IsCorrectOrder(List<string> brewingIngredients)
     {
-        if (selectedIngredients.Count != currentOrder.Count)
+        Debug.Log("Comparing orders:");
+        Debug.Log($"Selected count: {brewingIngredients.Count}, Current order count: {currentOrder.Count}");
+        if (brewingIngredients.Count != currentOrder.Count)
             return false;
 
-        List<string> sortedSelected = new List<string>(selectedIngredients);
+        List<string> sortedSelected = new List<string>(brewingIngredients);
         List<string> sortedOrder = new List<string>(currentOrder);
         sortedSelected.Sort();
         sortedOrder.Sort();
+
+        Debug.Log("Sorted Selected: " + string.Join(", ", sortedSelected));
+        Debug.Log("Sorted Order: " + string.Join(", ", sortedOrder));
 
         for (int i = 0; i < sortedSelected.Count; i++)
         {
