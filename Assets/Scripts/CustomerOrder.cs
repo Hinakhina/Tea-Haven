@@ -12,29 +12,28 @@ public class CustomerOrder : MonoBehaviour
     [SerializeField] private GameplayUIManager gpuiManager;
 
     private CustomerMovement customerMovement;
-    private string[] teaOrders = { "Chrysantemum Tea", "Green Tea", "Oolong Tea", "Lavender Tea" };
     private string currentOrder;
 
-    private void Start()
+    private void OnEnable()
     {
-        gpuiManager = FindObjectOfType<GameplayUIManager>();
-        customerMovement = GetComponent<CustomerMovement>();
-        customerSpawner = FindObjectOfType<CustomerSpawner>();
+        InitializeComponents();
+        RequestNewOrder();
+    }
 
-        if (orderText == null)
-        {
-            orderText = GetComponentInChildren<TMP_Text>();
-            if (orderText == null)
-            {
-                Debug.LogError("Could not find OrderText in children!");
-            }
-        }
+    private void InitializeComponents()
+    {
+        if (gpuiManager == null) gpuiManager = FindObjectOfType<GameplayUIManager>();
+        if (customerMovement == null) customerMovement = GetComponent<CustomerMovement>();
+        if (customerSpawner == null) customerSpawner = FindObjectOfType<CustomerSpawner>();
+        if (orderText == null) orderText = GetComponentInChildren<TMP_Text>();
 
         if (customerMovement != null)
         {
             customerMovement.OnCustomerArrived += DisplayOrder;
         }
-
+    }
+    private void RequestNewOrder()
+    {
         if (customerSpawner != null)
         {
             var order = customerSpawner.GetRandomOrder();
@@ -44,29 +43,18 @@ public class CustomerOrder : MonoBehaviour
 
     public void AssignOrder((string teaName, List<string> ingredients) order)
     {
-
-        if (orderText == null)
-        {
-            orderText = GetComponentInChildren<TMP_Text>(); // Auto-find order text
-            if (orderText == null)
-            {
-                Debug.LogError("OrderText is missing in prefab!");
-                return;
-            }
-        }
-
         currentOrder = order.teaName;
         orderIngredients = new List<string>(order.ingredients);
-        orderText.text = "Order: " + currentOrder;
-        Debug.Log($"Assigned Order: {currentOrder}");
+
+        if (orderText != null)
+        {
+            orderText.text = "Order: " + currentOrder;
+            Debug.Log($"Assigned Order: {currentOrder}");
+        }
 
         if (gpuiManager != null)
         {
             gpuiManager.ShowTeaBrewingPanel(currentOrder, orderIngredients);
-        }
-        else
-        {
-            Debug.LogError("gpuiManager is null in CustomerOrder!");
         }
     }
 
@@ -100,7 +88,23 @@ public class CustomerOrder : MonoBehaviour
         Debug.Log("Customer leaving...");
         GameplayUIManager.Instance.removeMessage("");
 
-        Destroy(gameObject);
+        // Clean up
+        if (orderText != null)
+        {
+            orderText.text = "";
+        }
+        orderIngredients.Clear();
+        currentOrder = "";
+
         CustomerSpawner.Instance.CustomerLeft();
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        if (customerMovement != null)
+        {
+            customerMovement.OnCustomerArrived -= DisplayOrder;
+        }
     }
 }

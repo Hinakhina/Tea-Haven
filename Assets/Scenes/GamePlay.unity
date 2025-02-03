@@ -531,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: -15, y: 0, z: 0}
   orderPosition: {x: 3, y: 0, z: 0}
-  moveSpeed: 4
+  moveSpeed: 0
 --- !u!1 &96246676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,6 +1344,8 @@ MonoBehaviour:
   customerPrefab: {fileID: 87798348}
   spawnPoint: {fileID: 982685002}
   maxCustomers: 1
+  currentCustomers: 0
+  customerMoveSpeed: 2
 --- !u!4 &191514472
 Transform:
   m_ObjectHideFlags: 0
@@ -3656,7 +3658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &594296964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9826,3 +9828,4 @@ SceneRoots:
   - {fileID: 1904467088}
   - {fileID: 191514472}
   - {fileID: 982685002}
+  - {fileID: 369134088}
