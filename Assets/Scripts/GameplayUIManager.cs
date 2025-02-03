@@ -23,7 +23,7 @@ public class GameplayUIManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            availableIngredients = new List<string> { "Chrysantemum Tea Leaves", "Sugar", "Hot Water", "Matcha Powder", "Oolong Tea Leaves", "Lavender Tea Leaves" }; // add more ingredients here 
+            availableIngredients = new List<string> { "Chrysantemum Tea Leaves", "Sugar", "Hot Water", "Matcha Powder", "Oolong Tea Leaves", "Lavender Tea Leaves", "Milk", "Ice" }; // add more ingredients here 
             Instance = this;
         }
         else
