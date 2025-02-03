@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CustomerSpawner : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private int maxCustomers = 1;
-    private int currentCustomers = 0;
+    [SerializeField] private int currentCustomers = 0;
+    [SerializeField] private float customerMoveSpeed = 2f;
+
+    private GameObject activeCustomer;
 
     public Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
     {
@@ -23,6 +27,11 @@ public class CustomerSpawner : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            if (activeCustomer == null && customerPrefab != null)
+            {
+                activeCustomer = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
+                activeCustomer.SetActive(false); // Hide it initially
+            }
         }
         else
         {
@@ -32,52 +41,43 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
-        int existingCustomers = FindObjectsOfType<CustomerOrder>().Length;
-        Debug.Log("Total customers at start: " + existingCustomers);
-
-        if (existingCustomers == 0 && maxCustomers > 0)
+        if (currentCustomers == 0 && maxCustomers > 0)
         {
             SpawnNewCustomer();
         }
+        Debug.Log("Total customers at start: " + currentCustomers);
     }
 
     public void SpawnNewCustomer()
     {
+        Debug.Log("SpawnNewCustomer() called!");
         if (currentCustomers >= maxCustomers)
         {
             Debug.Log("Max customers reached");
             return;
         }
 
-        if (customerPrefab == null)
+        if (activeCustomer != null)
         {
-            Debug.LogError("Customer prefab is missing!");
-            return;
-        }
+            // Reuse existing customer
+            activeCustomer.transform.position = spawnPoint.position;
 
-        GameObject newCustomer = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
-        CustomerOrder customerOrder = newCustomer.GetComponent<CustomerOrder>();
-        CustomerAppearance appearance = newCustomer.GetComponent<CustomerAppearance>();
+            // Set movement speed
+            CustomerMovement movement = activeCustomer.GetComponent<CustomerMovement>();
+            if (movement != null)
+            {
+                movement.moveSpeed = customerMoveSpeed;
+                movement.ResetPosition();
+            }
 
-        if (customerOrder != null)
-        {
-            var order = GetRandomOrder();
-            customerOrder.AssignOrder(order);
-        }
-
-        if (appearance != null)
-        {
-            Debug.Log("Customer appearance script found. Assigning sprite...");
+            activeCustomer.SetActive(true);
+            Debug.Log($"Reactivated customer: {activeCustomer.name}");
+            currentCustomers++;
         }
         else
         {
-            Debug.LogError("CustomerAppearance script is missing from the prefab!");
+            Debug.LogError("Active customer reference is null! This shouldn't happen.");
         }
-        newCustomer.SetActive(true);
-        Debug.Log("Spawned new customer: " + newCustomer.name);
-
-        currentCustomers++;
-        Debug.Log("Spawned new customer. Current count: " + currentCustomers);
     }
 
     public (string, List<string>) GetRandomOrder()
@@ -91,19 +91,23 @@ public class CustomerSpawner : MonoBehaviour
 
     public void CustomerLeft()
     {
+        Debug.Log("CustomerLeft() called!");
         if (currentCustomers > 0) 
         {
             currentCustomers--;
-            Debug.Log("Customer left. Current count: " + currentCustomers);
         }
-        if (currentCustomers < maxCustomers)
+        Debug.Log($"Customer left. Current count: {currentCustomers}");
+        if (activeCustomer != null)
         {
-            SpawnNewCustomer();
+            activeCustomer.SetActive(false);
         }
-        else
-        {
-            Debug.LogWarning("Tried to reduce customers below zero!");
-        }
+        StartCoroutine(SpawnNextCustomerAfterDelay());
     }
-    
+    private IEnumerator SpawnNextCustomerAfterDelay()
+    {
+        Debug.Log("SpawnNextCustomerAfterDelay() started!");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Spawning new customer in 1 second...");
+        SpawnNewCustomer();
+    }
 }
