@@ -3,73 +3,33 @@ using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-    private Vector2 originalPosition;
+    private Vector3 originalPosition;
     private Transform originalParent;
+    private CanvasGroup canvasGroup;
 
-    private void Awake()
+    private void Start()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
+        originalPosition = transform.position;
         originalParent = transform.parent;
-        originalPosition = rectTransform.anchoredPosition;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
-        transform.SetParent(transform.root);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta;
+        transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
-        if (!IsDroppedInValidTarget())
-        {
-            ReturnToOriginalPosition();
-        }
-    }
-
-    private bool IsDroppedInValidTarget()
-    {
-        GameObject dropTarget = GetDropTarget();
-        if (dropTarget != null)
-        {
-            Debug.Log($"Dropped on: {dropTarget.name}");
-            return true;
-        }
-        return false;
-    }
-
-    private GameObject GetDropTarget()
-    {
-        PointerEventData pointerData = new PointerEventData(EventSystem.current);
-        pointerData.position = Input.mousePosition;
-
-        var results = new System.Collections.Generic.List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerData, results);
-
-        foreach (RaycastResult result in results)
-        {
-            if (result.gameObject.CompareTag("DropZone"))
-            {
-                return result.gameObject;
-            }
-        }
-
-        return null;
-    }
-
-    private void ReturnToOriginalPosition()
-    {
-        transform.SetParent(originalParent);
-        rectTransform.anchoredPosition = originalPosition;
+        transform.position = originalPosition;
     }
 }
