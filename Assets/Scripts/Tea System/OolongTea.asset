@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b365e18e574a17e4b9d8611e4eeb57f0, type: 3}
+  m_Name: OolongTea
+  m_EditorClassIdentifier: 
+  teaName: Oolong Tea
+  teaLeavesSprite: {fileID: 21300000, guid: 7f9745803d9c6d048b8a8bf0c3c68555, type: 3}
+  brewingSprite: {fileID: 0}
+  brewedSprite: {fileID: 21300000, guid: 1ba1a979a2c6fa8458221ba486342cf9, type: 3}
