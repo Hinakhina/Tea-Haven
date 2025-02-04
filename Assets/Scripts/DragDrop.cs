@@ -9,14 +9,13 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private CanvasGroup canvasGroup;
     private bool isFollowingCursor = false;
 
-    public List<Transform> goalObjects; // List of valid goal targets
+    public List<Transform> goalObjects;
 
     private void Start()
     {
         originalPosition = transform.position;
         originalParent = transform.parent;
 
-        // Try to get CanvasGroup; if missing, add one
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
@@ -26,12 +25,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private void Update()
     {
-        // Follow cursor while picked up
         if (isFollowingCursor)
         {
             transform.position = Input.mousePosition;
 
-            // Cancel with Right Click
             if (Input.GetMouseButtonDown(1))
             {
                 ResetPosition();
@@ -43,13 +40,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         if (!isFollowingCursor)
         {
-            // Pick up the item
             isFollowingCursor = true;
-            canvasGroup.blocksRaycasts = false; // Prevents interaction issues
+            canvasGroup.blocksRaycasts = false;
         }
         else
         {
-            // Try placing it if clicking on a goal object
             if (IsOverGoal())
             {
                 Debug.Log("Ingredient placed!");
@@ -96,7 +91,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         foreach (Transform goal in goalObjects)
         {
             float distance = Vector3.Distance(transform.position, goal.position);
-            if (distance < 50f) // Adjust threshold if needed
+            if (distance < 50f)
             {
                 return true;
             }

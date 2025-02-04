@@ -45,7 +45,7 @@ public class Brewer : MonoBehaviour
         if (isBrewed)
         {
             Debug.Log("Pouring tea into cup/glass.");
-            return Instantiate(brewedTeaPrefab); // Creates the brewed tea object
+            return Instantiate(brewedTeaPrefab);
         }
         Debug.Log("Tea is not ready yet!");
         return null;
