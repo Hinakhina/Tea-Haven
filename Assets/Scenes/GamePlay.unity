@@ -812,6 +812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1463778765}
 --- !u!225 &100975620
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1755,6 +1757,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1477142337}
+  - {fileID: 1918921378}
 --- !u!225 &275424056
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4354,6 +4359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1477142337}
+  - {fileID: 1918921378}
 --- !u!225 &877050321
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4559,6 +4567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects: []
 --- !u!225 &985516363
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6887,6 +6896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects: []
 --- !u!225 &1477142342
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7046,6 +7056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1477142337}
+  - {fileID: 1918921378}
 --- !u!225 &1548687752
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7375,6 +7388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1463778765}
 --- !u!225 &1604260271
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7682,6 +7697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1463778765}
 --- !u!225 &1672811916
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8193,6 +8210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1463778765}
 --- !u!225 &1832328076
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8751,6 +8770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalObjects: []
 --- !u!225 &1918921383
 CanvasGroup:
   m_ObjectHideFlags: 0
