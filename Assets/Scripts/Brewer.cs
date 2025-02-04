@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Brewer : MonoBehaviour
 {
-    public TeaVariant currentTeaVariant;
-    public SpriteRenderer brewerRenderer;
 
     private bool hasTeaLeaves = false;
     private bool hasWater = false;
@@ -12,26 +10,25 @@ public class Brewer : MonoBehaviour
     public bool isBrewed = false;
     public float brewTime = 5f;
 
+    public TeaVariant currentTeaVariant;
+    public SpriteRenderer brewerRenderer;
     public GameObject brewedTeaPrefab;
-
-    public void AddTeaLeaves(TeaVariant tea)
+    public Sprite emptyBrewerSprite;
+    public void AddIngredients(TeaVariant tea)
     {
-        if (!hasTeaLeaves)
+        if (hasTeaLeaves)
         {
             currentTeaVariant = tea;
             hasTeaLeaves = true;
-            brewerRenderer.sprite = tea.teaLeavesSprite;
-            Debug.Log($"{tea.teaName} leaves added.");
+            brewerRenderer.sprite = currentTeaVariant.teaLeavesSprite;
+            Debug.Log("Leaves added.");
+            StartCoroutine(BrewTea());
         }
-    }
-
-    public void AddWater()
-    {
-        if (hasTeaLeaves && !hasWater)
+        else if (hasTeaLeaves && !hasWater)
         {
             hasWater = true;
-            brewerRenderer.sprite = currentTeaVariant.brewingSprite;
-            Debug.Log("Water added. Brewing started...");
+            brewerRenderer.sprite = currentTeaVariant.brewedSprite;
+            Debug.Log("Water added. Starting brew...");
             StartCoroutine(BrewTea());
         }
         else
