@@ -679,6 +679,7 @@ GameObject:
   - component: {fileID: 100975616}
   - component: {fileID: 100975619}
   - component: {fileID: 100975620}
+  - component: {fileID: 100975621}
   m_Layer: 5
   m_Name: ChrysantemumTeaButton
   m_TagString: Untagged
@@ -826,6 +827,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &100975621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100975614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 0
 --- !u!1 &103264061
 GameObject:
   m_ObjectHideFlags: 0
@@ -4226,6 +4240,7 @@ GameObject:
   - component: {fileID: 877050317}
   - component: {fileID: 877050320}
   - component: {fileID: 877050321}
+  - component: {fileID: 877050322}
   m_Layer: 5
   m_Name: SugarButton
   m_TagString: Untagged
@@ -4374,6 +4389,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &877050322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877050315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 1
 --- !u!1 &982685001
 GameObject:
   m_ObjectHideFlags: 0
@@ -6677,12 +6705,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548ffc0bf48a5b842bb63e77a169c3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brewingTime: 3
   hasTeaLeaves: 0
+  hasWater: 0
   isBrewing: 0
   isBrewed: 0
-  hasWater: 0
-  brewedTeaPrefab: {fileID: 0}
+  brewTime: 5
+  brewedTea: {fileID: 0}
 --- !u!225 &1463778770
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6953,6 +6981,7 @@ GameObject:
   - component: {fileID: 1548687748}
   - component: {fileID: 1548687751}
   - component: {fileID: 1548687752}
+  - component: {fileID: 1548687753}
   m_Layer: 5
   m_Name: MilkButton
   m_TagString: Untagged
@@ -7101,6 +7130,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1548687753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548687746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 3
 --- !u!1 &1550073467
 GameObject:
   m_ObjectHideFlags: 0
@@ -7285,6 +7327,7 @@ GameObject:
   - component: {fileID: 1604260267}
   - component: {fileID: 1604260270}
   - component: {fileID: 1604260271}
+  - component: {fileID: 1604260272}
   m_Layer: 5
   m_Name: LavenderTeaButton
   m_TagString: Untagged
@@ -7432,6 +7475,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1604260272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604260265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 0
 --- !u!1 &1644828710
 GameObject:
   m_ObjectHideFlags: 0
@@ -7594,6 +7650,7 @@ GameObject:
   - component: {fileID: 1672811912}
   - component: {fileID: 1672811915}
   - component: {fileID: 1672811916}
+  - component: {fileID: 1672811917}
   m_Layer: 5
   m_Name: GreenTeaButton
   m_TagString: Untagged
@@ -7741,6 +7798,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1672811917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672811910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 0
 --- !u!1 &1712032706
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,6 +8177,7 @@ GameObject:
   - component: {fileID: 1832328072}
   - component: {fileID: 1832328075}
   - component: {fileID: 1832328076}
+  - component: {fileID: 1832328077}
   m_Layer: 5
   m_Name: OolongTeaButton
   m_TagString: Untagged
@@ -8254,6 +8325,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1832328077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832328070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 0
 --- !u!1 &1847488462
 GameObject:
   m_ObjectHideFlags: 0
