@@ -3,51 +3,43 @@ using UnityEngine;
 
 public class Brewer : MonoBehaviour
 {
-    public bool hasTeaLeaves = false;
-    public bool hasWater = false;
-    public bool isBrewing = false;
-    public bool isBrewed = false;
-    public float brewTime = 5f;
+    public float brewingTime = 3f;
+    private bool isBrewing = false;
 
-    public GameObject brewedTea;
-
-    public void AddIngredient(string ingredient)
+    private void Start()
     {
-        if (ingredient == "Tea Leaves" && !hasTeaLeaves)
+        ResetBrewer();
+    }
+
+    public bool AddTeaLeaves()
+    {
+        return OrderManager.Instance.AddTeaLeaves();
+    }
+
+    public bool AddWater()
+    {
+        if (OrderManager.Instance.AddWater())
         {
-            hasTeaLeaves = true;
-            Debug.Log("Tea leaves added.");
-        }
-        else if (ingredient == "Water" && hasTeaLeaves && !hasWater)
-        {
-            hasWater = true;
-            Debug.Log("Water added. Starting brew...");
             StartCoroutine(BrewTea());
+            return true;
         }
-        else
-        {
-            Debug.Log("Invalid sequence! Add tea leaves first, then water.");
-        }
+        return false;
     }
 
     private IEnumerator BrewTea()
     {
+        if (isBrewing) yield break;
+
         isBrewing = true;
-        yield return new WaitForSeconds(brewTime);
-        isBrewed = true;
+        Debug.Log("Brewing tea...");
+        yield return new WaitForSeconds(brewingTime);
         isBrewing = false;
-        Debug.Log("Tea brewing complete! Ready to pour.");
+        OrderManager.Instance.BrewingComplete();
+        Debug.Log("Brewing complete! Tea is ready.");
     }
 
-    public GameObject PourTea()
+    public void ResetBrewer()
     {
-        if (isBrewed)
-        {
-            Debug.Log("Pouring tea into cup/glass.");
-            return brewedTea;
-        }
-        Debug.Log("Tea is not ready yet!");
-        return null;
+        isBrewing = false;
     }
 }
-

@@ -19,7 +19,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = false;
-        transform.SetParent(transform.root); // Move to top UI layer to avoid sorting issues
+        transform.SetParent(transform.root);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -31,7 +31,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         canvasGroup.blocksRaycasts = true;
 
-        // Check if dropped in a valid location
         if (!IsDroppedInValidTarget())
         {
             ReturnToOriginalPosition();
@@ -40,7 +39,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private bool IsDroppedInValidTarget()
     {
-        // Assuming a list of valid drop zones that should contain game objects
         GameObject dropTarget = GetDropTarget();
         if (dropTarget != null)
         {
@@ -60,7 +58,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         foreach (RaycastResult result in results)
         {
-            if (result.gameObject.CompareTag("DropZone")) // Ensure the object is a valid drop target
+            if (result.gameObject.CompareTag("DropZone"))
             {
                 return result.gameObject;
             }
