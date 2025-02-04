@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Brewer : MonoBehaviour
@@ -6,13 +7,13 @@ public class Brewer : MonoBehaviour
 
     private bool hasTeaLeaves = false;
     private bool hasWater = false;
-    private bool isBrewing = false;
+    public bool isBrewing = false;
     public bool isBrewed = false;
     public float brewTime = 5f;
 
     public TeaVariant currentTeaVariant;
     public SpriteRenderer brewerRenderer;
-    public GameObject brewedTeaPrefab;
+    public GameObject brewedTeaSprite;
     public Sprite emptyBrewerSprite;
     public void AddIngredients(TeaVariant tea)
     {
@@ -47,14 +48,28 @@ public class Brewer : MonoBehaviour
         Debug.Log("Tea brewing complete! Ready to pour.");
     }
 
-    public GameObject PourTea()
+    public void PourTea()
     {
         if (isBrewed)
         {
             Debug.Log($"Pouring {currentTeaVariant.teaName} tea.");
-            return brewedTeaPrefab;
+            if (brewedTeaSprite != null)
+            {
+                SpriteRenderer pouredTeaRenderer = brewedTeaSprite.GetComponent<SpriteRenderer>();
+                pouredTeaRenderer.sprite = currentTeaVariant.brewedSprite;
+            }
+            ResetBrewer();
         }
-        Debug.Log("Tea is not ready yet!");
-        return null;
+        else
+        {
+            Debug.Log("Tea is not ready yet!");
+        }
+    }
+    private void ResetBrewer()
+    {
+        hasTeaLeaves = false;
+        hasWater = false;
+        isBrewed = false;
+        brewerRenderer.sprite = null;
     }
 }
