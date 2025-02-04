@@ -3,41 +3,66 @@ using UnityEngine;
 
 public class Brewer : MonoBehaviour
 {
-    public float brewingTime = 3f;
     public bool hasTeaLeaves = false;
+    public bool hasWater = false;
     public bool isBrewing = false;
     public bool isBrewed = false;
-    public bool hasWater = false;
+    public float brewTime = 5f;
 
-    public GameObject brewedTeaPrefab;
+    public GameObject brewedTea;
 
-    public void AddIngredient(GameObject ingredient)
+    public void AddIngredient(Ingredients ingredients)
     {
-        if (ingredient.CompareTag("Tea Leaves") && !hasTeaLeaves)
+        if (ingredients == null)
         {
-            hasTeaLeaves = true;
-            Debug.Log("Tea leaves added.");
+            Debug.LogWarning("Tried to add a null ingredient!");
+            return;
         }
-        else if (ingredient.CompareTag("Water") && hasTeaLeaves && !hasWater)
+
+        switch (ingredients.ingredientsType)
         {
-            hasWater = true;
-            Debug.Log("Water added. Starting brew...");
-            StartCoroutine(BrewTea());
-        }
-        else
-        {
-            Debug.Log("Invalid sequence! Add tea leaves first, then water.");
+            case Ingredients.IngredientsType.TeaLeaves:
+                if (!hasTeaLeaves)
+                {
+                    hasTeaLeaves = true;
+                    Debug.Log("Tea leaves added.");
+                }
+                else
+                {
+                    Debug.Log("Tea leaves are already added.");
+                }
+                break;
+
+            case Ingredients.IngredientsType.Water:
+                if (hasTeaLeaves && !hasWater)
+                {
+                    hasWater = true;
+                    Debug.Log("Water added. Starting brew...");
+                    StartCoroutine(BrewTea());
+                }
+                else if (!hasTeaLeaves)
+                {
+                    Debug.Log("Add tea leaves first before adding water.");
+                }
+                else
+                {
+                    Debug.Log("Water is already added.");
+                }
+                break;
+
+            default:
+                Debug.Log("This ingredient is not needed in the brewer.");
+                break;
         }
     }
 
     private IEnumerator BrewTea()
     {
         isBrewing = true;
-        Debug.Log("Brewing tea...");
-        yield return new WaitForSeconds(brewingTime);
+        yield return new WaitForSeconds(brewTime);
+        isBrewed = true;
         isBrewing = false;
-        OrderManager.Instance.BrewingComplete();
-        Debug.Log("Brewing complete! Tea is ready.");
+        Debug.Log("Tea brewing complete! Ready to pour.");
     }
 
     public GameObject PourTea()
@@ -45,7 +70,7 @@ public class Brewer : MonoBehaviour
         if (isBrewed)
         {
             Debug.Log("Pouring tea into cup/glass.");
-            return Instantiate(brewedTeaPrefab);
+            return brewedTea;
         }
         Debug.Log("Tea is not ready yet!");
         return null;
