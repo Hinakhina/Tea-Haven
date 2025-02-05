@@ -42,7 +42,7 @@ public class PouringSystem : MonoBehaviour
 
     public void AddIce()
     {
-        if (!isPoured || cup != null)
+        if (!isPoured || glass != null)
         {
             Debug.Log("Ice can only be added to a glass.");
             return;

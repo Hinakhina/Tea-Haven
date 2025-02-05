@@ -18,8 +18,11 @@ public class TeaBrewing : MonoBehaviour
 
     public void AddIngredient(string ingredient)
     {
-        selectedIngredients.Add(ingredient);
-        UpdateUI();
+        if (availableIngredients.Contains(ingredient) && !selectedIngredients.Contains(ingredient))
+        {
+            selectedIngredients.Add(ingredient);
+            UpdateUI();
+        }
     }
 
     public void SelectIngredient(string ingredient)
@@ -35,26 +38,30 @@ public class TeaBrewing : MonoBehaviour
         selectedIngredients.Clear();
     }
 
+    private bool ValidateOrder()
+    {
+        return string.Join(", ", selectedIngredients) == currentOrder;
+    }
     public void SubmitTea()
     {
-        string brewedTea = string.Join(", ", selectedIngredients);
-        Debug.Log("Brewed Tea: " + brewedTea);
-
-        if (CheckOrder())
+        if (ValidateOrder())
         {
             Debug.Log("Correct order!");
             GameplayUIManager.Instance.ShowSuccessMessage("Order correct!");
+            ResetBrewing();
         }
         else
         {
             Debug.Log("Incorrect order!");
             GameplayUIManager.Instance.ShowErrorMessage("Wrong ingredients!");
         }
+    }
 
+    private void ResetBrewing()
+    {
         selectedIngredients.Clear();
         UpdateUI();
     }
-
     private bool IsCorrectOrder()
     {
         return selectedIngredients.Count > 0 && string.Join(", ", selectedIngredients) == currentOrder;
@@ -69,10 +76,6 @@ public class TeaBrewing : MonoBehaviour
         {
             GameplayUIManager.Instance.ShowErrorMessage("Incorrect ingredients!");
         }
-    }
-    private bool CheckOrder()
-    {
-        return selectedIngredients.Contains(currentOrder);
     }
 
     private void UpdateUI()

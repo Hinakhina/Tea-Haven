@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -15,32 +16,45 @@ public class Brewer : MonoBehaviour
     public SpriteRenderer brewerRenderer;
     public GameObject brewedTeaSprite;
     public Sprite emptyBrewerSprite;
+    public List<TeaVariant> availableTeaVariants;
     public void AddIngredients(TeaVariant tea)
     {
+        Debug.Log($"Trying to add: {tea}");
         if (hasTeaLeaves)
         {
             currentTeaVariant = tea;
             hasTeaLeaves = true;
             brewerRenderer.sprite = currentTeaVariant.teaLeavesSprite;
             Debug.Log("Leaves added.");
-            StartCoroutine(BrewTea());
         }
         else if (hasTeaLeaves && !hasWater)
         {
             hasWater = true;
-            brewerRenderer.sprite = currentTeaVariant.brewedSprite;
             Debug.Log("Water added. Starting brew...");
             StartCoroutine(BrewTea());
         }
         else
         {
-            Debug.Log("You must add tea leaves first!");
+            Debug.Log("Brewing in Progress or already complete!");
+        }
+    }
+
+    public void AddIngredientsFromInspector(int teaVariantIndex)
+    {
+        if (teaVariantIndex >= 0 && teaVariantIndex < availableTeaVariants.Count)
+        {
+            AddIngredients(availableTeaVariants[teaVariantIndex]);
+        }
+        else
+        {
+            Debug.LogError("Invalid tea variant index");
         }
     }
 
     private IEnumerator BrewTea()
     {
         isBrewing = true;
+        brewerRenderer.sprite = currentTeaVariant.brewingSprite;
         yield return new WaitForSeconds(brewTime);
         isBrewed = true;
         isBrewing = false;
@@ -70,6 +84,8 @@ public class Brewer : MonoBehaviour
         hasTeaLeaves = false;
         hasWater = false;
         isBrewed = false;
-        brewerRenderer.sprite = null;
+        isBrewing = false;
+        brewerRenderer.sprite = emptyBrewerSprite;
+        currentTeaVariant = null;
     }
 }

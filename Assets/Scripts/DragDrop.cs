@@ -75,6 +75,22 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
+        if (gameObject.CompareTag("DrinkContainer"))
+        {
+            DrinkContainer container = gameObject.GetComponent<DrinkContainer>();
+            if (container != null)
+            {
+                if (gameObject.CompareTag("Milk"))
+                {
+                    container.AddMilk();
+                }
+                else if (gameObject.CompareTag("Sugar"))
+                {
+                    container.AddSugar();
+                }
+            }
+        }
+
         if (IsOverGoal())
         {
             Debug.Log("Ingredient placed via drag!");
