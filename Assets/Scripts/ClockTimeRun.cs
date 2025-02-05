@@ -33,10 +33,10 @@ public class ClockTimeRun : MonoBehaviour
 
             while (timer <= 0)
             {
-                Minute += 0.6666;
+                Minute += 0.66667;
                 OnMinuteChanged?.Invoke();
 
-                if (Minute >= 58)
+                if (Minute >= 60)
                 {
                     Hour += 1;
                     Minute = 0;

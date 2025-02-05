@@ -35,24 +35,28 @@ public class GameManager : MonoBehaviour
 
     public void StartNewGame()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Starting a new game...");
         SceneManager.LoadScene("GamePlay");
     }
 
     public void ContinueGame()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Continuing the game...");
         SceneManager.LoadScene("GamePlay");
     }
 
     public void OpenSettings()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Opening settings...");
         SceneManager.LoadScene("SettingsPage");
     }
 
     public void ExitGame()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Exiting the game...");
         Application.Quit();
     }
