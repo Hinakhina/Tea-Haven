@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CafeDayCycleManager : MonoBehaviour
+public class TimeCycle : MonoBehaviour
 {
     [SerializeField] GameObject blackPanel;
 
@@ -13,12 +13,14 @@ public class CafeDayCycleManager : MonoBehaviour
     public int totalCoins = 0; // Coins earned
     private List<CustomerOrder> activeOrders = new List<CustomerOrder>(); // Track active customer orders
 
+    private CustomerOrder CustomerOrder;
     private CustomerSpawner customerSpawner; // Reference to CustomerSpawner
 
     void Start()
     {
         LoadProgress();
         StartNewDay();
+        Debug.Log("TimeCycle");
 
         customerSpawner = FindObjectOfType<CustomerSpawner>();
         ClockTimeRun.OnMinuteChanged += CheckClosingConditions;
@@ -29,12 +31,13 @@ public class CafeDayCycleManager : MonoBehaviour
         ClockTimeRun.OnMinuteChanged -= CheckClosingConditions;
     }
 
-    private void CheckClosingConditions()
+    public void CheckClosingConditions()
     {
         if (isShopOpen)
         {
-            if (ClockTimeRun.Hour >= 17 && !isWaitingForOrdersToComplete)
+            if (ClockTimeRun.Hour >= 17)
             {
+                Debug.Log("Closing?");
                 // Stop spawning new customers
                 if (customerSpawner != null)
                 {
@@ -42,7 +45,7 @@ public class CafeDayCycleManager : MonoBehaviour
                     Debug.Log("Customer spawning disabled.");
                 }
 
-                if (activeOrders.Count > 0)
+                if (activeOrders.Count > 0 || CustomerOrder.currentOrder != "")
                 {
                     // Freeze time until all orders are completed
                     isWaitingForOrdersToComplete = true;
@@ -50,14 +53,16 @@ public class CafeDayCycleManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Closing Cafe...");
                     StartCoroutine(ClosingSequence());
                 }
             }
         }
-        else if (isWaitingForOrdersToComplete && activeOrders.Count == 0)
+        else if (isWaitingForOrdersToComplete && (activeOrders.Count == 0 || CustomerOrder.currentOrder == ""))
         {
             // All orders are completed, proceed to closing
             isWaitingForOrdersToComplete = false;
+            Debug.Log("Closing Cafe...");
             StartCoroutine(ClosingSequence());
         }
     }

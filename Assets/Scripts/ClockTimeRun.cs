@@ -14,6 +14,8 @@ public class ClockTimeRun : MonoBehaviour
     private float minuteIrl = 0.5f; //2s irl = 1min in-game
     private float timer;
 
+    private TimeCycle TimeCycle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,8 @@ public class ClockTimeRun : MonoBehaviour
 
             while (timer <= 0)
             {
-                Minute += 0.6667;
+                // Minute += 0.6667;
+                Minute += 5;
                 OnMinuteChanged?.Invoke();
 
                 if (Minute >= 60)
@@ -46,5 +49,8 @@ public class ClockTimeRun : MonoBehaviour
                 timer = minuteIrl;
             }
         }
+        // else{
+        //     TimeCycle.CheckClosingConditions();
+        // }
     }
 }

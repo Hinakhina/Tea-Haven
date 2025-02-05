@@ -12,7 +12,7 @@ public class CustomerOrder : MonoBehaviour
     [SerializeField] private GameplayUIManager gpuiManager;
 
     private CustomerMovement customerMovement;
-    private string currentOrder;
+    public string currentOrder;
 
     private void OnEnable()
     {
@@ -24,6 +24,7 @@ public class CustomerOrder : MonoBehaviour
         else
         {
             Debug.Log("No new orders after 17:00.");
+
         }
     }
 
