@@ -41,7 +41,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
-        if (currentCustomers == 0 && maxCustomers > 0)
+        if (currentCustomers == 0 && maxCustomers > 0 && ClockTimeRun.Hour < 17)
         {
             SpawnNewCustomer();
         }
@@ -51,6 +51,14 @@ public class CustomerSpawner : MonoBehaviour
     public void SpawnNewCustomer()
     {
         Debug.Log("SpawnNewCustomer() called!");
+
+        // Prevent spawning after 17:00
+        if (ClockTimeRun.Hour >= 17)
+        {
+            Debug.Log("No customers after 17:00.");
+            return;
+        }
+
         if (currentCustomers >= maxCustomers)
         {
             Debug.Log("Max customers reached");
@@ -59,10 +67,8 @@ public class CustomerSpawner : MonoBehaviour
 
         if (activeCustomer != null)
         {
-            // Reuse existing customer
             activeCustomer.transform.position = spawnPoint.position;
 
-            // Set movement speed
             CustomerMovement movement = activeCustomer.GetComponent<CustomerMovement>();
             if (movement != null)
             {
@@ -76,7 +82,7 @@ public class CustomerSpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Active customer reference is null! This shouldn't happen.");
+            Debug.LogError("Active customer reference is null!");
         }
     }
 
@@ -85,29 +91,44 @@ public class CustomerSpawner : MonoBehaviour
         List<string> teaNames = new List<string>(teaRecipes.Keys);
         string randomTea = teaNames[Random.Range(0, teaNames.Count)];
         var ingredients = teaRecipes[randomTea];
-        Debug.Log($"GetRandomOrder: Selected {randomTea} with ingredients: {string.Join(", ", ingredients)}");
+        Debug.Log($"GetRandomOrder: {randomTea} with {string.Join(", ", ingredients)}");
         return (randomTea, ingredients);
     }
 
     public void CustomerLeft()
     {
         Debug.Log("CustomerLeft() called!");
-        if (currentCustomers > 0) 
+        if (currentCustomers > 0)
         {
             currentCustomers--;
         }
         Debug.Log($"Customer left. Current count: {currentCustomers}");
+
         if (activeCustomer != null)
         {
             activeCustomer.SetActive(false);
         }
-        StartCoroutine(SpawnNextCustomerAfterDelay());
+
+        if (ClockTimeRun.Hour < 17)
+        {
+            StartCoroutine(SpawnNextCustomerAfterDelay());
+        }
     }
+
     private IEnumerator SpawnNextCustomerAfterDelay()
     {
         Debug.Log("SpawnNextCustomerAfterDelay() started!");
         yield return new WaitForSeconds(1f);
-        Debug.Log("Spawning new customer in 1 second...");
-        SpawnNewCustomer();
+
+        // Check time again after delay
+        if (ClockTimeRun.Hour < 17)
+        {
+            Debug.Log("Spawning new customer...");
+            SpawnNewCustomer();
+        }
+        else
+        {
+            Debug.Log("Time is past 17:00, no new customers will spawn.");
+        }
     }
 }
