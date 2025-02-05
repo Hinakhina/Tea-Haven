@@ -18,6 +18,7 @@ public class PauseManager : MonoBehaviour
 
     public void ShowPauseScreen()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         if (pauseScreen != null)
         {
             pauseScreen.SetActive(true);
@@ -32,6 +33,7 @@ public class PauseManager : MonoBehaviour
     //retry day button
     public void RetryButton()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Retry day...");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
@@ -39,6 +41,7 @@ public class PauseManager : MonoBehaviour
 
     public void ResumeButton()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         if (pauseScreen != null)
         {
             pauseScreen.SetActive(false);
@@ -53,6 +56,7 @@ public class PauseManager : MonoBehaviour
 
     public void ShowHomeConfirmation()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         if (homeConfirmationScreen != null)
         {
             homeConfirmationScreen.SetActive(true);
@@ -66,6 +70,7 @@ public class PauseManager : MonoBehaviour
 
     public void CancelGoHome()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         if (homeConfirmationScreen != null)
         {
             homeConfirmationScreen.SetActive(false);
@@ -79,6 +84,7 @@ public class PauseManager : MonoBehaviour
     
     public void GoHomeButton()
     {
+        AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Back to Main Menu...");
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
