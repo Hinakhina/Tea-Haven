@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 100975619}
   - component: {fileID: 100975620}
   - component: {fileID: 100975621}
+  - component: {fileID: 100975622}
   m_Layer: 5
   m_Name: ChrysantemumTeaButton
   m_TagString: Untagged
@@ -668,19 +669,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 100975617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1904467089}
-        m_TargetAssemblyTypeName: GameplayUIManager, Assembly-CSharp
-        m_MethodName: SelectIngredient
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Chrysantemum Tea Leaves
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &100975617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,6 +747,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientsType: 0
+--- !u!114 &100975622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100975614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfccbfc4503d5c4295f264760c5fa75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teaVariant: {fileID: 11400000, guid: 74e71d138e6dad940997f59405c3bb44, type: 2}
 --- !u!1 &171829816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,9 +1370,10 @@ GameObject:
   - component: {fileID: 233983821}
   - component: {fileID: 233983823}
   - component: {fileID: 233983822}
+  - component: {fileID: 233983826}
   m_Layer: 5
   m_Name: waterCup
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1432,6 +1435,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233983820}
   m_CullTransparentMesh: 1
+--- !u!225 &233983826
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233983820}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &275424049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2728,9 +2743,12 @@ GameObject:
   - component: {fileID: 715191761}
   - component: {fileID: 715191763}
   - component: {fileID: 715191762}
+  - component: {fileID: 715191764}
+  - component: {fileID: 715191765}
+  - component: {fileID: 715191766}
   m_Layer: 5
   m_Name: waterCup (1)
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2792,6 +2810,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715191760}
   m_CullTransparentMesh: 1
+--- !u!225 &715191764
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715191760}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &715191765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715191760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830f85814cdf8fb418a04431b29fafc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientsType: 2
+--- !u!114 &715191766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715191760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1463778765}
 --- !u!1 &738995077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3991,10 +4048,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1904467089}
-        m_TargetAssemblyTypeName: GameplayUIManager, Assembly-CSharp
-        m_MethodName: SelectIngredient
-        m_Mode: 5
+      - m_Target: {fileID: 233983820}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4002,6 +4059,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Hot Water
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 715191760}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &985516359
 MonoBehaviour:
@@ -5824,6 +5893,7 @@ GameObject:
   - component: {fileID: 1463778770}
   - component: {fileID: 1463778771}
   - component: {fileID: 1463778772}
+  - component: {fileID: 1463778773}
   m_Layer: 5
   m_Name: TeaBrewerButton
   m_TagString: Brewer
@@ -5897,14 +5967,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1463778769}
         m_TargetAssemblyTypeName: Brewer, Assembly-CSharp
-        m_MethodName: AddIngredients
-        m_Mode: 2
+        m_MethodName: PourTea
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 74e71d138e6dad940997f59405c3bb44, type: 2}
-          m_ObjectArgumentAssemblyTypeName: TeaVariant, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Brewer
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1463778767
@@ -6078,6 +6148,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.0001, y: 0.0001}
   m_EdgeRadius: 0
+--- !u!114 &1463778773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463778764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1918921378}
+  - {fileID: 1477142337}
 --- !u!1 &1470357529
 GameObject:
   m_ObjectHideFlags: 0
@@ -6821,6 +6906,7 @@ GameObject:
   - component: {fileID: 1604260270}
   - component: {fileID: 1604260271}
   - component: {fileID: 1604260272}
+  - component: {fileID: 1604260273}
   m_Layer: 5
   m_Name: LavenderTeaButton
   m_TagString: Untagged
@@ -6891,19 +6977,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1604260268}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1904467089}
-        m_TargetAssemblyTypeName: GameplayUIManager, Assembly-CSharp
-        m_MethodName: SelectIngredient
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Lavender Tea Leaves
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1604260268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6981,6 +7055,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientsType: 0
+--- !u!114 &1604260273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604260265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfccbfc4503d5c4295f264760c5fa75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teaVariant: {fileID: 11400000, guid: 102b00261d8d0f14baadf6ebadc0e5fb, type: 2}
 --- !u!1 &1644828710
 GameObject:
   m_ObjectHideFlags: 0
@@ -7216,9 +7303,10 @@ GameObject:
   - component: {fileID: 1672811914}
   - component: {fileID: 1672811913}
   - component: {fileID: 1672811912}
-  - component: {fileID: 1672811915}
   - component: {fileID: 1672811916}
   - component: {fileID: 1672811917}
+  - component: {fileID: 1672811919}
+  - component: {fileID: 1672811920}
   m_Layer: 5
   m_Name: GreenTeaButton
   m_TagString: Untagged
@@ -7289,19 +7377,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1672811913}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1904467089}
-        m_TargetAssemblyTypeName: GameplayUIManager, Assembly-CSharp
-        m_MethodName: SelectIngredient
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Matcha Powder
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1672811913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7340,20 +7416,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672811910}
   m_CullTransparentMesh: 1
---- !u!114 &1672811915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672811910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goalObjects:
-  - {fileID: 1463778765}
 --- !u!225 &1672811916
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7379,6 +7441,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientsType: 0
+--- !u!114 &1672811919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672811910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalObjects:
+  - {fileID: 1463778765}
+--- !u!114 &1672811920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672811910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfccbfc4503d5c4295f264760c5fa75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teaVariant: {fileID: 11400000, guid: 8d6b32deaaf387c4d9460d995c84a2b8, type: 2}
 --- !u!1 &1712032706
 GameObject:
   m_ObjectHideFlags: 0
@@ -7900,6 +7989,7 @@ GameObject:
   - component: {fileID: 1832328075}
   - component: {fileID: 1832328076}
   - component: {fileID: 1832328077}
+  - component: {fileID: 1832328078}
   m_Layer: 5
   m_Name: OolongTeaButton
   m_TagString: Untagged
@@ -7970,19 +8060,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1832328073}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1904467089}
-        m_TargetAssemblyTypeName: GameplayUIManager, Assembly-CSharp
-        m_MethodName: SelectIngredient
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Oolong Tea Leaves
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1832328073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8060,6 +8138,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientsType: 0
+--- !u!114 &1832328078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832328070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfccbfc4503d5c4295f264760c5fa75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teaVariant: {fileID: 11400000, guid: e0b2e94db253c1f499614ea0dce3e922, type: 2}
 --- !u!1 &1863293888
 GameObject:
   m_ObjectHideFlags: 0

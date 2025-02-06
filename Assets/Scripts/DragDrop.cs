@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -9,11 +10,12 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private Canvas canvas;
-
+    private Button button;
     public List<Transform> goalObjects;
 
     private void Start()
     {
+        button = GetComponent<Button>();
         originalPosition = transform.position;
         originalParent = transform.parent;
 
@@ -29,6 +31,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (button != null)
+            button.interactable = false;
+
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
 
@@ -52,6 +57,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (button != null)
+            button.interactable = true;
+
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
@@ -95,6 +103,23 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 {
                     brewer.AddIngredients(teaVariant);
                 }
+                else if (CompareTag("Water"))
+                {
+                    brewer.AddWater();
+                }
+            }
+        }
+        else if (target.CompareTag("Cup") || target.CompareTag("Glass"))
+        {
+            Brewer brewer = GameObject.FindGameObjectWithTag("Brewer").GetComponent<Brewer>();
+            if (brewer != null && brewer.isBrewed)
+            {
+                brewer.PourTea();
+                DrinkContainer drinkContainer = target.GetComponent<DrinkContainer>();
+                if (drinkContainer != null)
+                {
+                    drinkContainer.SetTeaVariant(brewer.currentTeaVariant);
+                }
             }
         }
         else if (target.CompareTag("Customer"))
@@ -115,8 +140,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private TeaVariant GetTeaVariantFromDraggedObject()
     {
-        TeaVariant teaVariant = GetComponent<TeaVariant>();
-        return teaVariant;
+        TeaIngredient variantRef = GetComponent<TeaIngredient>();
+        return variantRef != null ? variantRef.teaVariant : null;
     }
 
     private void ResetPosition()

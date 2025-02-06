@@ -20,7 +20,7 @@ public class Brewer : MonoBehaviour
     public void AddIngredients(TeaVariant tea)
     {
         Debug.Log($"Trying to add: {tea}");
-        if (hasTeaLeaves)
+        if (!hasTeaLeaves)
         {
             currentTeaVariant = tea;
             hasTeaLeaves = true;
@@ -36,6 +36,24 @@ public class Brewer : MonoBehaviour
         else
         {
             Debug.Log("Brewing in Progress or already complete!");
+        }
+    }
+
+    public void AddWater()
+    {
+        if (hasTeaLeaves && !hasWater)
+        {
+            hasWater = true;
+            Debug.Log("Water added. Starting brew...");
+            StartCoroutine(BrewTea());
+        }
+        else if (!hasTeaLeaves)
+        {
+            Debug.Log("Add tea leaves first!");
+        }
+        else if (hasWater)
+        {
+            Debug.Log("Water already added!");
         }
     }
 
@@ -66,7 +84,7 @@ public class Brewer : MonoBehaviour
     {
         if (isBrewed)
         {
-            Debug.Log($"Pouring {currentTeaVariant.teaName} tea.");
+            Debug.Log($"Pouring {currentTeaVariant.teaName}.");
             if (brewedTeaSprite != null)
             {
                 SpriteRenderer pouredTeaRenderer = brewedTeaSprite.GetComponent<SpriteRenderer>();

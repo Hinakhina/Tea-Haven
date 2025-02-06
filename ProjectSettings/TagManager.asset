@@ -11,6 +11,7 @@ TagManager:
   - Customer
   - Cup
   - Glass
+  - Water
   layers:
   - Default
   - TransparentFX

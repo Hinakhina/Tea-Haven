@@ -38,6 +38,11 @@ public class DrinkContainer : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         ingredients.Add(tea);
     }
 
+    public void SetTeaVariant(TeaVariant variant)
+    {
+        TeaVariant teaVariant = variant;
+    }
+
     public void AddIngredient(string ingredient)
     {
         if (!ingredients.Contains(ingredient))
