@@ -7,6 +7,10 @@ TagManager:
   - Milk
   - Sugar
   - DrinkContainer
+  - Brewer
+  - Customer
+  - Cup
+  - Glass
   layers:
   - Default
   - TransparentFX

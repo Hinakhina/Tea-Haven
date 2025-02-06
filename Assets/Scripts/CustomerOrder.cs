@@ -13,6 +13,7 @@ public class CustomerOrder : MonoBehaviour
 
     private CustomerMovement customerMovement;
     private string currentOrder;
+    private bool orderDisplayed = false;
 
     private void OnEnable()
     {
@@ -20,10 +21,6 @@ public class CustomerOrder : MonoBehaviour
         if (ClockTimeRun.Hour < 17)
         {
             RequestNewOrder();
-        }
-        else
-        {
-            Debug.Log("No new orders after 17:00.");
         }
     }
 
@@ -39,6 +36,7 @@ public class CustomerOrder : MonoBehaviour
             customerMovement.OnCustomerArrived += DisplayOrder;
         }
     }
+
     private void RequestNewOrder()
     {
         if (customerSpawner != null)
@@ -53,10 +51,12 @@ public class CustomerOrder : MonoBehaviour
         currentOrder = order.teaName;
         orderIngredients = new List<string>(order.ingredients);
 
+        string orderDisplay = $"Order: {currentOrder}\nIngredients: {string.Join(", ", orderIngredients)}";
+
         if (orderText != null)
         {
-            orderText.text = "Order: " + currentOrder;
-            Debug.Log($"Assigned Order: {currentOrder}");
+            orderText.text = orderDisplay;
+            Debug.Log($"Assigned Order: {orderDisplay}");
         }
 
         if (gpuiManager != null)
@@ -67,35 +67,37 @@ public class CustomerOrder : MonoBehaviour
 
     private void DisplayOrder()
     {
-        Debug.Log("Customer has arrived and ordered: " + currentOrder);
+        if (!orderDisplayed)
+        {
+            Debug.Log($"Customer has arrived and ordered: {currentOrder}\nIngredients: {string.Join(", ", orderIngredients)}");
+            orderDisplayed = true;
+        }
     }
 
     public List<string> GetOrderIngredients()
     {
-        return orderIngredients;
+        return new List<string>(orderIngredients);
     }
 
     public void ReceiveTea(bool isCorrect)
     {
         if (isCorrect)
         {
-            GameplayUIManager.Instance.ShowSuccessMessage("Customer: Thank you!");
+            GameplayUIManager.Instance.ShowSuccessMessage("Thank you! This is exactly what I wanted!");
         }
         else
         {
-            GameplayUIManager.Instance.ShowErrorMessage("Customer: This is wrong!");
+            GameplayUIManager.Instance.ShowErrorMessage("Sorry, this isn't what I ordered...");
         }
         StartCoroutine(LeaveCustomer());
-        // rn customer leaves no matter what tea u brewed
     }
 
     private IEnumerator LeaveCustomer()
     {
         yield return new WaitForSeconds(leaveDelay);
-        Debug.Log("Customer leaving...");
         GameplayUIManager.Instance.removeMessage("");
+        orderDisplayed = false;
 
-        // Clean up
         if (orderText != null)
         {
             orderText.text = "";

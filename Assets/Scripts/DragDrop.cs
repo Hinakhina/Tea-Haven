@@ -2,12 +2,13 @@
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Vector3 originalPosition;
     private Transform originalParent;
     private CanvasGroup canvasGroup;
-    private bool isFollowingCursor = false;
+    private RectTransform rectTransform;
+    private Canvas canvas;
 
     public List<Transform> goalObjects;
 
@@ -21,53 +22,32 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
-    }
 
-    private void Update()
-    {
-        if (isFollowingCursor)
-        {
-            transform.position = Input.mousePosition;
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                ResetPosition();
-            }
-        }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (!isFollowingCursor)
-        {
-            isFollowingCursor = true;
-            canvasGroup.blocksRaycasts = false;
-        }
-        else
-        {
-            if (IsOverGoal())
-            {
-                Debug.Log("Ingredient placed!");
-                ResetPosition();
-            }
-            else
-            {
-                Debug.Log("Invalid placement!");
-                ResetPosition();
-            }
-        }
+        rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        isFollowingCursor = false;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
+
+        originalPosition = transform.position;
+
+        transform.SetParent(canvas.transform);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.GetComponent<RectTransform>(),
+            eventData.position,
+            eventData.pressEventCamera,
+            out localPoint
+        );
+
+        rectTransform.anchoredPosition = localPoint;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -75,51 +55,73 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
-        if (gameObject.CompareTag("DrinkContainer"))
+        bool validDrop = false;
+
+        foreach (Transform goal in goalObjects)
         {
-            DrinkContainer container = gameObject.GetComponent<DrinkContainer>();
-            if (container != null)
+            if (RectTransformUtility.RectangleContainsScreenPoint(
+                goal.GetComponent<RectTransform>(),
+                eventData.position,
+                eventData.pressEventCamera))
             {
-                if (gameObject.CompareTag("Milk"))
-                {
-                    container.AddMilk();
-                }
-                else if (gameObject.CompareTag("Sugar"))
-                {
-                    container.AddSugar();
-                }
+                validDrop = true;
+                HandleDrop(goal.gameObject);
+                break;
             }
         }
 
-        if (IsOverGoal())
-        {
-            Debug.Log("Ingredient placed via drag!");
-            ResetPosition();
-        }
-        else
+        if (!validDrop)
         {
             ResetPosition();
         }
     }
 
-    private bool IsOverGoal()
+    private bool CheckOrderMatch(CustomerOrder customerOrder, DrinkContainer drink)
     {
-        foreach (Transform goal in goalObjects)
+        List<string> requiredIngredients = customerOrder.GetOrderIngredients();
+        List<string> drinkIngredients = drink.GetIngredients();
+
+        return new HashSet<string>(requiredIngredients).SetEquals(drinkIngredients);
+    }
+    private void HandleDrop(GameObject target)
+    {
+        if (target.CompareTag("Brewer"))
         {
-            float distance = Vector3.Distance(transform.position, goal.position);
-            if (distance < 50f)
+            Brewer brewer = target.GetComponent<Brewer>();
+            if (brewer != null)
             {
-                return true;
+                TeaVariant teaVariant = GetTeaVariantFromDraggedObject();
+                if (teaVariant != null)
+                {
+                    brewer.AddIngredients(teaVariant);
+                }
             }
         }
-        return false;
+        else if (target.CompareTag("Customer"))
+        {
+            CustomerOrder customerOrder = target.GetComponent<CustomerOrder>();
+            DrinkContainer drink = GetComponent<DrinkContainer>();
+
+            if (customerOrder != null && drink != null)
+            {
+                bool isCorrect = CheckOrderMatch(customerOrder, drink);
+                customerOrder.ReceiveTea(isCorrect);
+                Destroy(drink.gameObject);
+            }
+        }
+
+        ResetPosition();
+    }
+
+    private TeaVariant GetTeaVariantFromDraggedObject()
+    {
+        TeaVariant teaVariant = GetComponent<TeaVariant>();
+        return teaVariant;
     }
 
     private void ResetPosition()
     {
         transform.position = originalPosition;
         transform.SetParent(originalParent);
-        isFollowingCursor = false;
-        canvasGroup.blocksRaycasts = true;
     }
 }
