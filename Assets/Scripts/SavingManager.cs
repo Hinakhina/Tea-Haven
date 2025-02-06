@@ -1,0 +1,55 @@
+using UnityEngine;
+
+public class SavingManager : MonoBehaviour
+{
+    public static SavingManager Instance;
+    public int Coins { get; private set; }
+    public int DayCount { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadGameData();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    public void AddCoins(int amount)
+    {
+        Coins += amount;
+    }
+    
+    public void CompleteDay()
+    {
+        DayCount++;
+        SaveGameData();
+    }
+    
+    public void SaveGameData()
+    {
+        Debug.Log($"Coins : {Coins}");
+        Debug.Log($"DayCount : {DayCount}");
+        PlayerPrefs.SetInt("Coins", Coins);
+        PlayerPrefs.SetInt("DayCount", DayCount);
+        PlayerPrefs.Save();
+    }
+    
+    public void LoadGameData()
+    {
+        Coins = PlayerPrefs.GetInt("Coins", 0);
+        DayCount = PlayerPrefs.GetInt("DayCount", 1);
+    }
+    
+    public void ResetGameData()
+    {
+        Coins = 0;
+        DayCount = 1;
+        SaveGameData();
+    }
+}

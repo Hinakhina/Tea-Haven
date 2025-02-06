@@ -131,4 +131,10 @@ public class CustomerSpawner : MonoBehaviour
             Debug.Log("Time is past 17:00, no new customers will spawn.");
         }
     }
+
+    // ✅ **FIXED ERROR**: Added this method to avoid CS1061 error in TimeCycle.cs
+    public bool HasActiveCustomers()
+    {
+        return currentCustomers > 0;
+    }
 }

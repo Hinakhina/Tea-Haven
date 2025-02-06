@@ -1,142 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class TimeCycle : MonoBehaviour
 {
-    [SerializeField] GameObject blackPanel;
-
-    private bool isShopOpen = false;
-    private bool isWaitingForOrdersToComplete = false;
-
-    public int totalCoins = 0; // Coins earned
-    private List<CustomerOrder> activeOrders = new List<CustomerOrder>(); // Track active customer orders
-
-    private CustomerOrder CustomerOrder;
-    private CustomerSpawner customerSpawner; // Reference to CustomerSpawner
-
-    void Start()
+    [SerializeField] private GameObject blackPanel;
+    
+    private void Start()
     {
-        LoadProgress();
-        StartNewDay();
-        Debug.Log("TimeCycle");
+        ClockTimeRun clockTime = GetComponent<ClockTimeRun>();
+        if (clockTime == null)
+            clockTime = gameObject.AddComponent<ClockTimeRun>();
 
-        customerSpawner = FindObjectOfType<CustomerSpawner>();
-        ClockTimeRun.OnMinuteChanged += CheckClosingConditions;
+        ClockTimeRun.OnHourChanged += CheckDayEnd;
     }
 
-    void OnDestroy()
+    private void CheckDayEnd()
     {
-        ClockTimeRun.OnMinuteChanged -= CheckClosingConditions;
-    }
-
-    public void CheckClosingConditions()
-    {
-        if (isShopOpen)
+        if (ClockTimeRun.Hour >= 17 && !CustomerSpawner.Instance.HasActiveCustomers())
         {
-            if (ClockTimeRun.Hour >= 17)
-            {
-                Debug.Log("Closing?");
-                // Stop spawning new customers
-                if (customerSpawner != null)
-                {
-                    customerSpawner.enabled = false;
-                    Debug.Log("Customer spawning disabled.");
-                }
-
-                if (activeOrders.Count > 0 || CustomerOrder.currentOrder != "")
-                {
-                    // Freeze time until all orders are completed
-                    isWaitingForOrdersToComplete = true;
-                    Debug.Log("Waiting for all customer orders to be completed...");
-                }
-                else
-                {
-                    Debug.Log("Closing Cafe...");
-                    StartCoroutine(ClosingSequence());
-                }
-            }
-        }
-        else if (isWaitingForOrdersToComplete && (activeOrders.Count == 0 || CustomerOrder.currentOrder == ""))
-        {
-            // All orders are completed, proceed to closing
-            isWaitingForOrdersToComplete = false;
-            Debug.Log("Closing Cafe...");
-            StartCoroutine(ClosingSequence());
+            StartCoroutine(EndDaySequence());
         }
     }
 
-    public void AddCoins(int amount)
+    private IEnumerator EndDaySequence()
     {
-        totalCoins += amount;
-        Debug.Log("Coins: " + totalCoins);
-    }
+        CustomerSpawner.Instance.StopSpawning();
 
-    public void NewOrderReceived(CustomerOrder order)
-    {
-        if (!activeOrders.Contains(order))
+        while (CustomerSpawner.Instance.HasActiveCustomers())
         {
-            activeOrders.Add(order);
-            Debug.Log("New customer order received.");
-        }
-    }
-
-    public void OrderCompleted(CustomerOrder order)
-    {
-        if (activeOrders.Contains(order))
-        {
-            activeOrders.Remove(order);
-            Debug.Log("Customer order completed.");
-        }
-    }
-
-    private void StartNewDay()
-    {
-        ClockTimeRun.Hour = 8;
-        ClockTimeRun.Minute = 0;
-        isShopOpen = true;
-
-        if (customerSpawner != null)
-        {
-            customerSpawner.enabled = true; // Re-enable customer spawning
-            Debug.Log("Customer spawning enabled.");
+            yield return new WaitForSeconds(1f);
         }
 
-        Debug.Log("Cafe is now open! Coins: " + totalCoins);
-    }
-
-    private IEnumerator ClosingSequence()
-    {
-        isShopOpen = false;
-        Debug.Log("Closing scene starts...");
-
-        // Simulate closing scene duration
-        yield return new WaitForSeconds(3f);
         blackPanel.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
+
+        SavingManager.Instance.CompleteDay();
+        GetComponent<ClockTimeRun>().ResetTime();
+
         blackPanel.SetActive(false);
-
-        SaveProgress();
-        ProceedToNextDay();
     }
 
-    private void SaveProgress()
+    private void OnDestroy()
     {
-        PlayerPrefs.SetInt("TotalCoins", totalCoins);
-        PlayerPrefs.Save();
-        Debug.Log("Progress saved with coins: " + totalCoins);
-    }
-
-    private void LoadProgress()
-    {
-        totalCoins = PlayerPrefs.GetInt("TotalCoins", 0); // Default is 0 if no data exists
-        Debug.Log("Progress loaded. Coins: " + totalCoins);
-    }
-
-    private void ProceedToNextDay()
-    {
-        Debug.Log("Proceeding to the next day...");
-        StartNewDay();
+        ClockTimeRun.OnHourChanged -= CheckDayEnd;
     }
 }

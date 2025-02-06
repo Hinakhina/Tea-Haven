@@ -81,6 +81,7 @@ public class CustomerOrder : MonoBehaviour
         if (isCorrect)
         {
             GameplayUIManager.Instance.ShowSuccessMessage("Customer: Thank you!");
+            SavingManager.Instance.AddCoins(10);
         }
         else
         {
