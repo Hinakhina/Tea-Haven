@@ -8,10 +8,10 @@ public class ClockTimeRun : MonoBehaviour
     public static Action OnMinuteChanged;
     public static Action OnHourChanged;
 
-    public static double Minute {get; private set;}
-    public static double Hour {get; private set;}
+    public static double Minute {get; set;}
+    public static double Hour {get; set;}
 
-    private float minuteIrl = 1f; //2s irl = 1min in-game
+    private float minuteIrl = 0.5f; //2s irl = 1min in-game
     private float timer;
 
     // Start is called before the first frame update
@@ -27,19 +27,24 @@ public class ClockTimeRun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
+        if (Hour < 17) // Prevent time from increasing after 17:00
+        {
+            timer -= Time.deltaTime;
 
-        while(timer <= 0){
-            Minute+= 0.333333;
-            OnMinuteChanged?.Invoke();
+            while (timer <= 0)
+            {
+                Minute += 0.66667;
+                OnMinuteChanged?.Invoke();
 
-            if(Minute >= 60){
-                Hour+= 1;
-                Minute = 0;
-                OnHourChanged?.Invoke();
+                if (Minute >= 60)
+                {
+                    Hour += 1;
+                    Minute = 0;
+                    OnHourChanged?.Invoke();
+                }
+
+                timer = minuteIrl;
             }
-
-            timer = minuteIrl;
         }
     }
 }

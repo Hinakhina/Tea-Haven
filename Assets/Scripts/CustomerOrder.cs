@@ -17,7 +17,14 @@ public class CustomerOrder : MonoBehaviour
     private void OnEnable()
     {
         InitializeComponents();
-        RequestNewOrder();
+        if (ClockTimeRun.Hour < 17)
+        {
+            RequestNewOrder();
+        }
+        else
+        {
+            Debug.Log("No new orders after 17:00.");
+        }
     }
 
     private void InitializeComponents()
