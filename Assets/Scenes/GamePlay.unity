@@ -6263,6 +6263,7 @@ GameObject:
   - component: {fileID: 1477142342}
   - component: {fileID: 1477142343}
   - component: {fileID: 1477142344}
+  - component: {fileID: 1477142345}
   m_Layer: 5
   m_Name: GlassButton
   m_TagString: Glass
@@ -6425,6 +6426,14 @@ MonoBehaviour:
   hasTea: 0
   hasMilk: 0
   hasSugar: 0
+  containerRenderer: {fileID: 1477142345}
+  emptyContainerSprite: {fileID: 21300000, guid: af8ac26301ec80740aba2e876b95c8d8, type: 3}
+  teaSprites:
+  - {fileID: 21300000, guid: e8ec4071e44094141923f548e43a1d21, type: 3}
+  - {fileID: 21300000, guid: ecf1c7c34a09a6e43b694ad6ee2e5a5c, type: 3}
+  - {fileID: 21300000, guid: fe6e6a66ab738a042870138577f73a76, type: 3}
+  - {fileID: 21300000, guid: c6959005f53f7bf4aa280191f2e03667, type: 3}
+  teaNames: []
 --- !u!61 &1477142344
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6470,6 +6479,58 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!212 &1477142345
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477142336}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -807773953
+  m_SortingLayer: 1
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1548687746
 GameObject:
   m_ObjectHideFlags: 0
@@ -8609,10 +8670,11 @@ GameObject:
   - component: {fileID: 1918921381}
   - component: {fileID: 1918921380}
   - component: {fileID: 1918921379}
-  - component: {fileID: 1918921382}
   - component: {fileID: 1918921383}
   - component: {fileID: 1918921384}
   - component: {fileID: 1918921385}
+  - component: {fileID: 1918921386}
+  - component: {fileID: 1918921387}
   m_Layer: 5
   m_Name: CupButton
   m_TagString: Cup
@@ -8734,19 +8796,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918921377}
   m_CullTransparentMesh: 1
---- !u!114 &1918921382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918921377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56dc2f3a4415ee84c911643385337389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goalObjects: []
 --- !u!225 &1918921383
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8775,6 +8824,18 @@ MonoBehaviour:
   hasTea: 0
   hasMilk: 0
   hasSugar: 0
+  containerRenderer: {fileID: 1918921386}
+  emptyContainerSprite: {fileID: 21300000, guid: 7dcac725930b3a7428379e8b0b9f7884, type: 3}
+  teaSprites:
+  - {fileID: 21300000, guid: 755ceb4ecddb8514d9c8b79bea6d2a5c, type: 3}
+  - {fileID: 21300000, guid: 72120e4edeab4f54791a17b4d94da83a, type: 3}
+  - {fileID: 21300000, guid: 154d900f56590834e8ef125bb10ebac8, type: 3}
+  - {fileID: 21300000, guid: c6b293216d650c84aa6c478f5578561c, type: 3}
+  teaNames:
+  - Chrysantemum Tea
+  - Green Tea
+  - Lavender Tea
+  - Oolong Tea
 --- !u!61 &1918921385
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8820,6 +8881,70 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!212 &1918921386
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918921377}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -807773953
+  m_SortingLayer: 1
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1918921387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918921377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3969f63d59ef464abe0ae9586aa819f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1966504239
 GameObject:
   m_ObjectHideFlags: 0

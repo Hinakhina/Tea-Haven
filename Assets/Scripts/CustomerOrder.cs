@@ -44,6 +44,12 @@ public class CustomerOrder : MonoBehaviour
             var order = customerSpawner.GetRandomOrder();
             AssignOrder(order);
         }
+        else
+        {
+            OrderManager.Instance.GenerateNewOrder();
+            var latestOrder = OrderManager.Instance.GetCurrentOrder();
+            AssignOrder(FormatOrder(latestOrder));
+        }
     }
 
     public void AssignOrder((string teaName, List<string> ingredients) order)
@@ -52,6 +58,7 @@ public class CustomerOrder : MonoBehaviour
         orderIngredients = new List<string>(order.ingredients);
 
         string orderDisplay = $"Order: {currentOrder}\nIngredients: {string.Join(", ", orderIngredients)}";
+        Debug.Log($"Assigned Order: {orderDisplay}");
 
         if (orderText != null)
         {
@@ -63,6 +70,18 @@ public class CustomerOrder : MonoBehaviour
         {
             gpuiManager.ShowTeaBrewingPanel(currentOrder, orderIngredients);
         }
+    }
+
+    private (string teaName, List<string> ingredients) FormatOrder(OrderManager.Order order)
+    {
+        string teaName = order.Type == OrderManager.OrderType.HotTea ? "Hot Tea" : "Iced Tea";
+        List<string> ingredients = new List<string>();
+
+        if (order.NeedsSugar) ingredients.Add("Sugar");
+        if (order.NeedsMilk) ingredients.Add("Milk");
+        if (order.NeedsIce) ingredients.Add("Ice");
+
+        return (teaName, ingredients);
     }
 
     private void DisplayOrder()

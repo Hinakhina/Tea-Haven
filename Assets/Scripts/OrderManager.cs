@@ -4,11 +4,14 @@ using UnityEngine;
 public class OrderManager : MonoBehaviour
 {
     public enum OrderType { HotTea, IcedTea }
+    private ClockTimeRun clock;
 
     public struct Order
     {
         public OrderType Type;
-        public bool NeedsSugarOrMilk;
+        public bool NeedsSugar;
+        public bool NeedsMilk;
+        public bool NeedsIce;
     }
 
     public static OrderManager Instance;
@@ -43,10 +46,17 @@ public class OrderManager : MonoBehaviour
         currentOrder = new Order
         {
             Type = (Random.value > 0.5f) ? OrderType.HotTea : OrderType.IcedTea,
-            NeedsSugarOrMilk = (Random.value > 0.5f)
+            NeedsSugar = (Random.value > 0.5f),
+            NeedsMilk = (Random.value > 0.5f),
+            NeedsIce = (Random.value > 0.5f)
         };
 
-        Debug.Log($"New Order: {currentOrder.Type}. Needs Sugar/Milk: {currentOrder.NeedsSugarOrMilk}");
+        Debug.Log($"New Order: {currentOrder.Type}. Needs Sugar: {currentOrder.NeedsSugar}, Milk: {currentOrder.NeedsMilk}, Ice: {currentOrder.NeedsIce}");
+    }
+
+    public Order GetCurrentOrder()
+    {
+        return currentOrder;
     }
 
     public bool AddTeaLeaves()
@@ -108,7 +118,7 @@ public class OrderManager : MonoBehaviour
 
     public bool AddSugarOrMilk()
     {
-        if ((pouredIntoCup || pouredIntoGlass) && currentOrder.NeedsSugarOrMilk && !sugarOrMilkAdded)
+        if ((pouredIntoCup || pouredIntoGlass) && (currentOrder.NeedsSugar || currentOrder.NeedsMilk ) && !sugarOrMilkAdded)
         {
             sugarOrMilkAdded = true;
             Debug.Log("Sugar/Milk added!");
@@ -120,7 +130,7 @@ public class OrderManager : MonoBehaviour
 
     public bool ServeOrder()
     {
-        if ((pouredIntoCup || pouredIntoGlass) && (!currentOrder.NeedsSugarOrMilk || sugarOrMilkAdded))
+        if ((pouredIntoCup || pouredIntoGlass) && ((!currentOrder.NeedsSugar || !currentOrder.NeedsMilk) || sugarOrMilkAdded))
         {
             Debug.Log("Order served! Generating new order...");
             GenerateNewOrder();

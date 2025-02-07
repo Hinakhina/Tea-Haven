@@ -114,11 +114,15 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Brewer brewer = GameObject.FindGameObjectWithTag("Brewer").GetComponent<Brewer>();
             if (brewer != null && brewer.isBrewed)
             {
-                brewer.PourTea();
-                DrinkContainer drinkContainer = target.GetComponent<DrinkContainer>();
-                if (drinkContainer != null)
+                TeaVariant pouredTea = brewer.PourTea();
+                if (pouredTea != null)
                 {
-                    drinkContainer.SetTeaVariant(brewer.currentTeaVariant);
+                    DrinkContainer drinkContainer = target.GetComponent<DrinkContainer>();
+                    if (drinkContainer != null)
+                    {
+                        drinkContainer.SetTeaVariant(pouredTea);
+                        Debug.Log($"Tea poured into container: {pouredTea.teaName}");  // Debug log
+                    }
                 }
             }
         }

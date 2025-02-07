@@ -80,7 +80,7 @@ public class Brewer : MonoBehaviour
         Debug.Log("Tea brewing complete! Ready to pour.");
     }
 
-    public void PourTea()
+    public TeaVariant PourTea()
     {
         if (isBrewed)
         {
@@ -90,11 +90,14 @@ public class Brewer : MonoBehaviour
                 SpriteRenderer pouredTeaRenderer = brewedTeaSprite.GetComponent<SpriteRenderer>();
                 pouredTeaRenderer.sprite = currentTeaVariant.brewedSprite;
             }
+            TeaVariant pouredTea = currentTeaVariant;
             ResetBrewer();
+            return pouredTea;
         }
         else
         {
             Debug.Log("Tea is not ready yet!");
+            return null;
         }
     }
     private void ResetBrewer()

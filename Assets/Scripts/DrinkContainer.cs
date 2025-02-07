@@ -14,11 +14,18 @@ public class DrinkContainer : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private Canvas canvas;
+    private TeaVariant teaVariant;
     private string teaName;
     private List<string> ingredients = new List<string>();
 
+    public SpriteRenderer containerRenderer;
+    public Sprite emptyContainerSprite;
+    [SerializeField] private Sprite[] teaSprites;
+    [SerializeField] private string[] teaNames;
     private void Start()
     {
+        containerRenderer = GetComponent<SpriteRenderer>();
+        containerRenderer.sprite = emptyContainerSprite;
         originalPosition = transform.position;
         originalParent = transform.parent;
 
@@ -40,7 +47,29 @@ public class DrinkContainer : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void SetTeaVariant(TeaVariant variant)
     {
-        TeaVariant teaVariant = variant;
+        teaVariant = variant;
+        Debug.Log($"SetTeaVariant called with tea: {variant.teaName}");
+        if (containerRenderer != null && teaVariant != null)
+        {
+            int index = System.Array.IndexOf(teaNames, teaVariant.teaName);
+            Debug.Log($"Found index: {index} for tea name: {teaVariant.teaName}");
+            if (index != -1 && index < teaSprites.Length)
+            {
+                containerRenderer.sprite = teaSprites[index];
+                Debug.Log("Sprite updated");
+            }
+            else
+            {
+                containerRenderer.sprite = emptyContainerSprite;
+                Debug.Log("Reset to empty sprite - no matching tea found");
+            }
+        }
+    }
+
+    public void EmptyContainer()
+    {
+        teaVariant = null;
+        containerRenderer.sprite = emptyContainerSprite;
     }
 
     public void AddIngredient(string ingredient)
