@@ -96,11 +96,13 @@ public class DraggableCup : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         Vector2 dropZonePosition = dropZone.transform.position;
+        transform.SetAsLastSibling();
+        Debug.Log("Cup forced to snap to drop zone: " + transform.position);
         float distance = Vector2.Distance(transform.position, dropZonePosition);
 
         Debug.Log($"Cup Position: {transform.position} | DropZone Position: {dropZonePosition} | Distance: {distance}");
 
-        return distance < 50f;
+        return distance < 300f;
     }
     private void ResetPosition()
     {

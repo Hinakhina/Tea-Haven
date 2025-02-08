@@ -13,6 +13,7 @@ TagManager:
   - Glass
   - Water
   - DropZone
+  - dropZone
   layers:
   - Default
   - TransparentFX
