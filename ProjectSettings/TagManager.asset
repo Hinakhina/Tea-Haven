@@ -12,6 +12,7 @@ TagManager:
   - Cup
   - Glass
   - Water
+  - DropZone
   layers:
   - Default
   - TransparentFX
