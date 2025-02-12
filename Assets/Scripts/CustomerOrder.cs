@@ -12,7 +12,7 @@ public class CustomerOrder : MonoBehaviour
     [SerializeField] private GameplayUIManager gpuiManager;
 
     private CustomerMovement customerMovement;
-    private string currentOrder;
+    public string currentOrder;
 
     private void OnEnable()
     {
@@ -80,13 +80,13 @@ public class CustomerOrder : MonoBehaviour
         if (isCorrect)
         {
             GameplayUIManager.Instance.ShowSuccessMessage("Customer: Thank you!");
+            SavingManager.Instance.AddCoins(10); // Add 10 coins
         }
         else
         {
             GameplayUIManager.Instance.ShowErrorMessage("Customer: This is wrong!");
         }
         StartCoroutine(LeaveCustomer());
-        // rn customer leaves no matter what tea u brewed
     }
 
     private IEnumerator LeaveCustomer()
@@ -95,7 +95,6 @@ public class CustomerOrder : MonoBehaviour
         Debug.Log("Customer leaving...");
         GameplayUIManager.Instance.removeMessage("");
 
-        // Clean up
         if (orderText != null)
         {
             orderText.text = "";

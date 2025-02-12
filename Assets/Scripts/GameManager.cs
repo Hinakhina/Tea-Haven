@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     public UIManager UIManager { get; private set; }
 
+    public SavingManager SavingManager;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
     {
         // Find UIManager and BrewingMachine in the scene
         UIManager = FindObjectOfType<UIManager>();
+        SavingManager = FindObjectOfType<SavingManager>();
 
         if (UIManager == null)
         {
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
     public void StartNewGame()
     {
         AudioManagers.Instance.PlaySFX("dink");
+        SavingManager.ResetGameData();
         Debug.Log("Starting a new game...");
         SceneManager.LoadScene("GamePlay");
     }
