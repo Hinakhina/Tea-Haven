@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+
 public class TimeCycle : MonoBehaviour
 {
     private CustomerSpawner customerSpawner;
@@ -9,6 +11,10 @@ public class TimeCycle : MonoBehaviour
     public int currentHour = 8; // Start at 8:00 AM
     public int closingHour = 17; // Shop closes at 5:00 PM
     [SerializeField] GameObject blackPanel;
+    private ClockTimeRun ClockTimeRun;
+
+    private bool isDayEnding = false;
+
     void Start()
     {
         customerSpawner = FindObjectOfType<CustomerSpawner>(); // Assign instance
@@ -17,54 +23,68 @@ public class TimeCycle : MonoBehaviour
             Debug.LogError("CustomerSpawner not found in the scene!");
         }
     }
-    void Update()
+    void update()
     {
-        SimulateTime();
-    }
-    void SimulateTime()
-    {
-        // Assuming this is called every in-game minute
-        currentHour = (currentHour + 1) % 24; // Increment time (example logic)
-        if (currentHour >= closingHour)
+        if(ClockTimeRun.Hour >= 17 && isDayEnding == true)
         {
             CheckClosingConditions();
         }
+
     }
-    void CheckClosingConditions()
+    public void CheckClosingConditions()
     {
-        if (CustomerSpawner.Instance.HasActiveCustomers())
+        Debug.Log("Check Closing Condition...");
+        if (CustomerSpawner.Instance.HasActiveCustomers()) 
         {
             // isWaitingForOrdersToComplete = true;
         }
         else
         {
+            Debug.Log("Ending Day...");
             EndDay();
         }
     }
     void EndDay()
     {
+        if(isDayEnding == true)
+        {
+            return;
+        }
+        isDayEnding = true;
         Debug.Log("Day ended. Saving progress...");
         SaveProgress();
-        AdvanceToNextDay();
     }
     void SaveProgress()
     {
+        SavingManager.Instance.AddDays();
         SavingManager.Instance.CompleteDay();
         Debug.Log("Game progress saved.");
+        StartCoroutine(AdvanceToNextDay());
     }
     public IEnumerator AdvanceToNextDay()
     {
+        Debug.Log("Next Day in 3...2...1..");
         yield return new WaitForSeconds(3f); // Initial delay
         blackPanel.SetActive(true); // Show transition effect
         yield return new WaitForSeconds(3f); // Wait while black panel is visible
-        ResetGameState(); // Restart the day
-        blackPanel.SetActive(false); // Remove transition effect
+        
+        // ResetGameState(); // Restart the day
+        // blackPanel.SetActive(false); // Remove transition effect
+        
         Debug.Log("New day started!");
+        ContinueGame();
     }
     void ResetGameState()
     {
         ClockTimeRun.Hour = 8; // Reset time
         ClockTimeRun.Minute = 0;
         Debug.Log("Game state reset for new day.");
+    }
+
+    public void ContinueGame()
+    {
+        AudioManagers.Instance.PlaySFX("dink");
+        Debug.Log("Continuing the game...");
+        SceneManager.LoadScene("GamePlay");
     }
 }

@@ -10,7 +10,7 @@ public class ClockTimeRun : MonoBehaviour
     public static double Hour {get; set;}
     private float minuteIrl = 0.5f; //2s irl = 1min in-game
     private float timer;
-    private TimeCycle timeCycle;
+    public TimeCycle TimeCycle;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +40,7 @@ public class ClockTimeRun : MonoBehaviour
             }
         }
         // else{
-        //     timeCycle.CheckClosingConditions();
+        //     TimeCycle.CheckClosingConditions();
         // }
     }
 }

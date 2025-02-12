@@ -1393,7 +1393,6 @@ GameObject:
   - component: {fileID: 275424053}
   - component: {fileID: 275424052}
   - component: {fileID: 275424051}
-  - component: {fileID: 275424054}
   - component: {fileID: 275424055}
   - component: {fileID: 275424056}
   m_Layer: 5
@@ -1517,18 +1516,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275424049}
   m_CullTransparentMesh: 1
---- !u!114 &275424054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275424049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bef052e9483499243a061ef5d4355a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &275424055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3865,7 +3852,6 @@ GameObject:
   - component: {fileID: 985516360}
   - component: {fileID: 985516359}
   - component: {fileID: 985516358}
-  - component: {fileID: 985516361}
   - component: {fileID: 985516363}
   m_Layer: 5
   m_Name: WaterDispenserButton
@@ -3990,18 +3976,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985516356}
   m_CullTransparentMesh: 1
---- !u!114 &985516361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985516356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bef052e9483499243a061ef5d4355a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &985516363
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5207,6 +5181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef052e9483499243a061ef5d4355a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeCycle: {fileID: 1295654685}
 --- !u!4 &1295654684
 Transform:
   m_ObjectHideFlags: 0

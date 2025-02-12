@@ -23,10 +23,15 @@ public class SavingManager : MonoBehaviour
     {
         Coins += amount;
     }
+
+    public void AddDays()
+    {
+        DayCount += 1;
+    }
    
     public void CompleteDay()
     {
-        DayCount++;
+        
         SaveGameData();
     }
    
