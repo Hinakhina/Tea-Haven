@@ -14,6 +14,9 @@ public class CustomerSpawner : MonoBehaviour
 
     private GameObject activeCustomer;
 
+    public delegate void CustomerLeftHandler();
+    public event CustomerLeftHandler OnCustomerLeft;
+
     public Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
     {
         { "Chrysantemum Tea", new List<string> { "Chrysantemum Tea Leaves", "Hot Water" } },
@@ -110,8 +113,16 @@ public class CustomerSpawner : MonoBehaviour
         {
             StartCoroutine(SpawnNextCustomerAfterDelay());
         }
+        else{
+            if(currentCustomers == 0)
+            {
+                Debug.Log("All customers left after closing time. Ending day...");
+                OnCustomerLeft?.Invoke();
+            }
+        }
         // StartCoroutine(SpawnNextCustomerAfterDelay());
     }
+
     private IEnumerator SpawnNextCustomerAfterDelay()
     {
         Debug.Log("SpawnNextCustomerAfterDelay() started!");
