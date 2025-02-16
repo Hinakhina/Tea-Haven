@@ -14,6 +14,9 @@ public class CustomerSpawner : MonoBehaviour
 
     private GameObject activeCustomer;
 
+    public delegate void CustomerLeftHandler();
+    public event CustomerLeftHandler OnCustomerLeft;
+
     public Dictionary<string, List<string>> teaRecipes = new Dictionary<string, List<string>>()
     {
         { "Chrysantemum Tea", new List<string> { "Chrysantemum Tea Leaves", "Hot Water" } },
@@ -41,7 +44,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
-        if (currentCustomers == 0 && maxCustomers > 0)
+        if (currentCustomers == 0 && maxCustomers > 0 && ClockTimeRun.Hour < 17)
         {
             SpawnNewCustomer();
         }
@@ -51,6 +54,11 @@ public class CustomerSpawner : MonoBehaviour
     public void SpawnNewCustomer()
     {
         Debug.Log("SpawnNewCustomer() called!");
+        if (ClockTimeRun.Hour >= 17)
+        {
+            Debug.Log("No customers after 17:00.");
+            return;
+        }
         if (currentCustomers >= maxCustomers)
         {
             Debug.Log("Max customers reached");
@@ -101,13 +109,39 @@ public class CustomerSpawner : MonoBehaviour
         {
             activeCustomer.SetActive(false);
         }
-        StartCoroutine(SpawnNextCustomerAfterDelay());
+        if (ClockTimeRun.Hour < 17)
+        {
+            StartCoroutine(SpawnNextCustomerAfterDelay());
+        }
+        else{
+            if(currentCustomers == 0)
+            {
+                Debug.Log("All customers left after closing time. Ending day...");
+                OnCustomerLeft?.Invoke();
+            }
+        }
+        // StartCoroutine(SpawnNextCustomerAfterDelay());
     }
+
     private IEnumerator SpawnNextCustomerAfterDelay()
     {
         Debug.Log("SpawnNextCustomerAfterDelay() started!");
         yield return new WaitForSeconds(1f);
-        Debug.Log("Spawning new customer in 1 second...");
-        SpawnNewCustomer();
+        // Debug.Log("Spawning new customer in 1 second...");
+        // SpawnNewCustomer();
+        if (ClockTimeRun.Hour < 17)
+        {
+            Debug.Log("Spawning new customer...");
+            SpawnNewCustomer();
+        }
+        else
+        {
+            Debug.Log("Time is past 17:00, no new customers will spawn.");
+        }
+    }
+
+    public bool HasActiveCustomers()
+    {
+        return currentCustomers > 0;
     }
 }

@@ -12,7 +12,7 @@ public class CustomerOrder : MonoBehaviour
     [SerializeField] private GameplayUIManager gpuiManager;
 
     private CustomerMovement customerMovement;
-    private string currentOrder;
+    public string currentOrder;
     private bool orderDisplayed = false;
 
     private void OnEnable()
@@ -103,6 +103,7 @@ public class CustomerOrder : MonoBehaviour
         if (isCorrect)
         {
             GameplayUIManager.Instance.ShowSuccessMessage("Thank you! This is exactly what I wanted!");
+            SavingManager.Instance.AddCoins(10); // Add 10 coins
         }
         else
         {
