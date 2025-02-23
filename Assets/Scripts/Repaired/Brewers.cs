@@ -57,7 +57,7 @@ public class Brewers : MonoBehaviour
         
         hasHotWater = true;
         CursorManagers.Instance.ResetSelection();
-        teaRecipe.AddIngredient("Hot Water");
+        // teaRecipe.AddIngredient("Hot Water");
         StartCoroutine(BrewTea());
     }
 

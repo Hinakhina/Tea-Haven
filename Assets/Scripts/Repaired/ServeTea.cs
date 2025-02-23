@@ -11,6 +11,8 @@ public class ServeTea : MonoBehaviour
     [SerializeField] Brewers brewerScript;
 
     [SerializeField] TeaRecipe teaRecipe;
+    [SerializeField] OrderManagers orderManagers;
+
 
     private void Start()
     {
@@ -21,6 +23,12 @@ public class ServeTea : MonoBehaviour
     {
         currentTea = teaType;
         isGlass = usedGlass;
+        if(isGlass){
+            teaRecipe.AddIngredient("Glass");
+        }
+        else{
+            teaRecipe.AddIngredient("Cup");
+        }
 
         teaOnTableButton.sprite = GetTeaSprite(teaType, isGlass); // Default without ice
         teaOnTableButton.gameObject.SetActive(true);
@@ -61,6 +69,7 @@ public class ServeTea : MonoBehaviour
     private void ServeToCustomer()
     {
         teaOnTableButton.gameObject.SetActive(false);
+        orderManagers.CheckOrder();
         currentTea = "";
         brewerScript.NotifyTeaServed();
         

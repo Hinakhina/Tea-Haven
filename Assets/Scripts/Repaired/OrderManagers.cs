@@ -1,0 +1,135 @@
+using System.Diagnostics;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class OrderManagers : MonoBehaviour
+{
+    [SerializeField] Image teaLeafImage, sugarMilkImage, iceImage, completedTeaImage;
+    [SerializeField] Sprite[] teaSprites; // Tea leaf sprites
+    [SerializeField] Sprite[] completedTeaSprites; // Completed tea sprites
+    [SerializeField] Sprite sugarSprite, milkSprite, emptySugarMilkSprite;
+    [SerializeField] Sprite iceSprite, emptyIceSprite;
+    [SerializeField] TeaRecipe teaRecipe;
+
+    private List<string> currentOrder = new List<string>(); // Stores generated order
+    private bool orderActive = false;
+    private bool isGlass;
+
+    void Start()
+    {
+        GenerateNewOrder();
+    }
+
+    public void GenerateNewOrder()
+    {
+        if (orderActive) return; // Only 1 order at a time
+
+        currentOrder.Clear();
+        string teaLeaf = GetRandomTeaLeaf();
+        bool hasIce = Random.value > 0.5f;
+        isGlass = hasIce;
+
+        currentOrder.Add(teaLeaf);
+        currentOrder.Add(isGlass ? "Glass" : "Cup");
+
+        string sugarMilk = GetRandomSugarMilk(); // Randomly decide sugar/milk/none
+        if (!string.IsNullOrEmpty(sugarMilk)) currentOrder.Add(sugarMilk);
+
+        if (hasIce) currentOrder.Add("Ice");
+
+        UpdateOrderUI(teaLeaf, isGlass, sugarMilk, hasIce);
+
+        UnityEngine.Debug.Log("New Order Arrived: " + string.Join(", ", currentOrder));
+
+        orderActive = true;
+
+    }
+
+    private string GetRandomTeaLeaf()
+    {
+        string[] teaOptions = { "Chrysanthemum", "Green", "Oolong", "Lavender" };
+        return teaOptions[Random.Range(0, teaOptions.Length)];
+    }
+
+    private string GetRandomSugarMilk()
+    {
+        int choice = Random.Range(0, 3); // 0 = None, 1 = Sugar, 2 = Milk
+        return choice == 1 ? "Sugar" : choice == 2 ? "Milk" : null;
+    }
+
+    private void UpdateOrderUI(string tea, bool isGlass, string sugarMilk, bool hasIce)
+    {
+        teaLeafImage.sprite = GetTeaSprite(tea);
+        // cupOrGlassImage.sprite = isGlass ? glassSprite : cupSprite;
+        sugarMilkImage.sprite = sugarMilk == "Sugar" ? sugarSprite :
+                                sugarMilk == "Milk" ? milkSprite : emptySugarMilkSprite;
+        iceImage.sprite = hasIce ? iceSprite : emptyIceSprite;
+        completedTeaImage.sprite = GetCompletedTeaSprite(tea, isGlass);
+    }
+
+    private Sprite GetTeaSprite(string tea)
+    {
+        switch (tea)
+        {
+            case "Chrysanthemum": return teaSprites[0];
+            case "Green": return teaSprites[1];
+            case "Oolong": return teaSprites[2];
+            case "Lavender": return teaSprites[3];
+            default: return null;
+        }
+    }
+
+    private Sprite GetCompletedTeaSprite(string tea, bool isGlass)
+    {
+        int index = isGlass ? 4 : 0; // Glass sprites start from index 4
+        switch (tea)
+        {
+            case "Chrysanthemum": return completedTeaSprites[index];
+            case "Green": return completedTeaSprites[index + 1];
+            case "Oolong": return completedTeaSprites[index + 2];
+            case "Lavender": return completedTeaSprites[index + 3];
+            default: return null;
+        }
+    }
+
+    public void CheckOrder()
+    {
+        List<string> brewedTea = teaRecipe.GetRecipe();
+
+        UnityEngine.Debug.Log("Order Tea: " + string.Join(", ", currentOrder));
+        UnityEngine.Debug.Log("Brewed Tea: " + string.Join(", ", brewedTea));
+
+        bool orderResult = IsOrderCorrect(brewedTea);
+
+        if (orderResult)
+        {
+            UnityEngine.Debug.Log("Correct Order!");
+            orderActive = false;
+            teaRecipe.ResetRecipe();
+            GenerateNewOrder();
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Wrong Order!");
+            orderActive = false;
+            teaRecipe.ResetRecipe();
+            GenerateNewOrder();
+        }
+    }
+
+    private bool IsOrderCorrect(List<string> brewedTea)
+    {
+        // Sort both lists alphabetically before comparison
+        brewedTea.Sort();
+        currentOrder.Sort();
+
+        if (brewedTea.Count != currentOrder.Count) return false;
+        
+        for (int i = 0; i < brewedTea.Count; i++)
+        {
+            if (brewedTea[i] != currentOrder[i]) return false;
+        }
+        return true;
+    }
+}
