@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -141,6 +142,8 @@ public class Brewers : MonoBehaviour
 
     public void NotifyTeaServed()
     {
+        UnityEngine.Debug.Log("ResetBrewer - Tea Served");
         teaOnTable = false; // Reset only when tea is served to the customer
+        ResetBrewer();
     }
 }
