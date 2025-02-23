@@ -1,0 +1,87 @@
+using System.Diagnostics;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ServeTea : MonoBehaviour
+{
+    public Image teaOnTableButton; // Tea button on the table
+    public Sprite[] teaSprites; // 8 variations: 4 for glass, 4 for cup
+    private string currentTea = "";
+    private bool isGlass = false; // Determines if ice can be added
+    [SerializeField] Brewers brewerScript;
+
+    [SerializeField] TeaRecipe teaRecipe;
+
+    private void Start()
+    {
+        teaOnTableButton.gameObject.SetActive(false);
+    }
+
+    public void PlaceTeaOnTable(string teaType, bool usedGlass)
+    {
+        currentTea = teaType;
+        isGlass = usedGlass;
+
+        teaOnTableButton.sprite = GetTeaSprite(teaType, isGlass); // Default without ice
+        teaOnTableButton.gameObject.SetActive(true);
+    }
+
+    public void OnTeaClicked()
+    {
+        if (string.IsNullOrEmpty(currentTea)) return;
+
+        string selectedIngredient = CursorManagers.Instance.GetSelectedIngredient();
+
+        if (selectedIngredient == "Ice" && isGlass)
+        {
+            UnityEngine.Debug.Log("Is Ice");
+            AddIce();
+        }
+        else if (selectedIngredient == "Ice" && !isGlass)
+        {
+            UnityEngine.Debug.Log("Cannot add ice to a cup!");
+        }
+        else if (selectedIngredient == "Milk" || selectedIngredient == "Sugar")
+        {
+            teaRecipe.AddIngredient(selectedIngredient); // Store sugar/milk
+            CursorManagers.Instance.ResetSelection();
+        }
+        else if (selectedIngredient == "")
+        {
+            ServeToCustomer();
+        }
+    }
+
+    private void AddIce()
+    {
+        teaRecipe.AddIngredient("Ice");
+        CursorManagers.Instance.ResetSelection();
+    }
+
+    private void ServeToCustomer()
+    {
+        teaOnTableButton.gameObject.SetActive(false);
+        currentTea = "";
+        brewerScript.NotifyTeaServed();
+        
+    }
+
+    private Sprite GetTeaSprite(string teaType, bool useGlass)
+    {
+        int index = useGlass ? 4 : 0; // Glass sprites start from index 4
+        switch (teaType)
+        {
+            case "Chrysanthemum": return teaSprites[index];
+            case "Green": return teaSprites[index + 1];
+            case "Oolong": return teaSprites[index + 2];
+            case "Lavender": return teaSprites[index + 3];
+            default: return null;
+        }
+    }
+
+    public void ResetTea(){
+        teaOnTableButton.gameObject.SetActive(false);
+        currentTea = "";
+        brewerScript.NotifyTeaServed();
+    }
+}

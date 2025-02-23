@@ -227,6 +227,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1956435810582935135, guid: e12123aff8937d8439e166c2b96600af, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1956435810582935135, guid: e12123aff8937d8439e166c2b96600af, type: 3}
+      propertyPath: sfxSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
+    - target: {fileID: 1956435810582935135, guid: e12123aff8937d8439e166c2b96600af, type: 3}
+      propertyPath: sfxSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
+    - target: {fileID: 1956435810582935135, guid: e12123aff8937d8439e166c2b96600af, type: 3}
+      propertyPath: sfxSounds.Array.data[1].name
+      value: chunk
+      objectReference: {fileID: 0}
     - target: {fileID: 5382457005157137241, guid: e12123aff8937d8439e166c2b96600af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 237.72987

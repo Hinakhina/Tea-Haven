@@ -308,7 +308,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: f2f6739a73b60154aa322ddde19231de, type: 3}
   sfxSounds:
   - name: dink
-    clip: {fileID: 8300000, guid: 825d262c5e6d03a458ca90b1f228c519, type: 3}
+    clip: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
   loopSounds: []
   musicSource: {fileID: 3269643019087238275}
   sfxSource: {fileID: 4171884224023223831}

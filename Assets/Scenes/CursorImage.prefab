@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8888708947171884044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5422984577258652924}
+  - component: {fileID: 493433819499638778}
+  m_Layer: 0
+  m_Name: CursorImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5422984577258652924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888708947171884044}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 799.8489, y: 513.0037, z: -4.446929}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &493433819499638778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888708947171884044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4b64039127729a45a91a3eedd17a317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chrysanthemumCursor: {fileID: 2800000, guid: 789252ce66bcb1b4e91e805b3226043a, type: 3}
+  greenCursor: {fileID: 2800000, guid: 7d1aa45b7a107ef4b833901f3be10fef, type: 3}
+  oolongCursor: {fileID: 2800000, guid: e69dd15c5260e6f4ba50e91c480bc576, type: 3}
+  lavenderCursor: {fileID: 2800000, guid: 7c47be8cc739dc246b27225232221e98, type: 3}
+  iceCursor: {fileID: 2800000, guid: b3cb2a5ac0bc06f4c94da6ac480443d0, type: 3}
+  sugarCursor: {fileID: 2800000, guid: c22e642ccdbc9124c9f54415bcfac911, type: 3}
+  milkCursor: {fileID: 2800000, guid: 18cfc68570e11c942befc671cb4d0c03, type: 3}
+  hotWaterCursor: {fileID: 2800000, guid: cb52a30851a54cf48947e96d2f531bc2, type: 3}
