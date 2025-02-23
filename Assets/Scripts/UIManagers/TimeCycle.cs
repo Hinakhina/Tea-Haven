@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TimeCycle : MonoBehaviour
 {
-    private CustomerSpawner customerSpawner;
+    private CustomersSpawner customersSpawner;
     public int currentHour = 8; // Start at 8:00 AM
     public int closingHour = 17; // Shop closes at 5:00 PM
     [SerializeField] private GameObject blackPanel;
@@ -14,14 +14,15 @@ public class TimeCycle : MonoBehaviour
 
     void Start()
     {
-        customerSpawner = FindObjectOfType<CustomerSpawner>();
-        if (customerSpawner == null)
+        customersSpawner = FindObjectOfType<CustomersSpawner>();
+        ClockTimeRun = FindObjectOfType<ClockTimeRun>();
+        if (customersSpawner == null)
         {
             Debug.LogError("CustomerSpawner not found in the scene!");
         }
         else
         {
-            customerSpawner.OnCustomerLeft += CheckClosingConditions; // Subscribe to event
+            customersSpawner.OnCustomerLeft += CheckClosingConditions; // Subscribe to event
         }
     }
 
@@ -38,7 +39,7 @@ public class TimeCycle : MonoBehaviour
         if (isDayEnding) return; // Prevent multiple calls
 
         // Ensure the time is at least 17:00 before ending the day
-        if (ClockTimeRun.Hour >= closingHour && !customerSpawner.HasActiveCustomers()) 
+        if (ClockTimeRun.Hour >= closingHour && !customersSpawner.isCustomerPresent) 
         {
             EndDay();
         }
@@ -95,9 +96,9 @@ public class TimeCycle : MonoBehaviour
 
     void OnDestroy()
     {
-        if (customerSpawner != null)
+        if (customersSpawner != null)
         {
-            customerSpawner.OnCustomerLeft -= CheckClosingConditions; // Unsubscribe when destroyed
+            customersSpawner.OnCustomerLeft -= CheckClosingConditions; // Unsubscribe when destroyed
         }
     }
 }

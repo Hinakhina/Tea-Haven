@@ -2,6 +2,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CursorManagers : MonoBehaviour
 {
@@ -47,34 +48,44 @@ public class CursorManagers : MonoBehaviour
         switch (ingredient)
         {
             case "Chrysanthemum":
+                AudioManagers.Instance.PlaySFX("leaves");
                 cursorImage = chrysanthemumCursor;
                 break;
             case "Green":
-                UnityEngine.Debug.Log("Cursor message");
+                AudioManagers.Instance.PlaySFX("leaves");
                 cursorImage = greenCursor;
                 break;
             case "Oolong":
+                AudioManagers.Instance.PlaySFX("leaves");
                 cursorImage = oolongCursor;
                 break;
             case "Lavender":
+                AudioManagers.Instance.PlaySFX("leaves");
                 cursorImage = lavenderCursor;
                 break;
             case "Ice":
+                AudioManagers.Instance.PlaySFX("ice");
                 cursorImage = iceCursor;
                 break;
             case "Sugar":
+                AudioManagers.Instance.PlaySFX("sugar");
                 cursorImage = sugarCursor;
                 break;
             case "Milk":
+                AudioManagers.Instance.PlaySFX("milk");
                 cursorImage = milkCursor;
                 break;
             case "Hot Water":
+                AudioManagers.Instance.PlaySFX("water");
+                // yield return new WaitForSeconds(1.0f);
                 cursorImage = hotWaterCursor;
                 break;
             case "Cup":
+                AudioManagers.Instance.PlaySFX("cup");
                 cursorImage = cupCursor;
                 break;
             case "Glass":
+                AudioManagers.Instance.PlaySFX("glass");
                 cursorImage = glassCursor;
                 break;
         }

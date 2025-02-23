@@ -1,7 +1,7 @@
-using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class OrderManagers : MonoBehaviour
 {
@@ -11,15 +11,13 @@ public class OrderManagers : MonoBehaviour
     [SerializeField] Sprite sugarSprite, milkSprite, emptySugarMilkSprite;
     [SerializeField] Sprite iceSprite, emptyIceSprite;
     [SerializeField] TeaRecipe teaRecipe;
+    [SerializeField] CustomersSpawner CustomersSpawner;
+
+    [SerializeField] public Text feedbackText; 
 
     private List<string> currentOrder = new List<string>(); // Stores generated order
     private bool orderActive = false;
     private bool isGlass;
-
-    void Start()
-    {
-        GenerateNewOrder();
-    }
 
     public void GenerateNewOrder()
     {
@@ -40,7 +38,7 @@ public class OrderManagers : MonoBehaviour
 
         UpdateOrderUI(teaLeaf, isGlass, sugarMilk, hasIce);
 
-        UnityEngine.Debug.Log("New Order Arrived: " + string.Join(", ", currentOrder));
+        Debug.Log("New Order Arrived: " + string.Join(", ", currentOrder));
 
         orderActive = true;
 
@@ -61,7 +59,6 @@ public class OrderManagers : MonoBehaviour
     private void UpdateOrderUI(string tea, bool isGlass, string sugarMilk, bool hasIce)
     {
         teaLeafImage.sprite = GetTeaSprite(tea);
-        // cupOrGlassImage.sprite = isGlass ? glassSprite : cupSprite;
         sugarMilkImage.sprite = sugarMilk == "Sugar" ? sugarSprite :
                                 sugarMilk == "Milk" ? milkSprite : emptySugarMilkSprite;
         iceImage.sprite = hasIce ? iceSprite : emptyIceSprite;
@@ -97,34 +94,34 @@ public class OrderManagers : MonoBehaviour
     {
         List<string> brewedTea = teaRecipe.GetRecipe();
 
-        UnityEngine.Debug.Log("Order Tea: " + string.Join(", ", currentOrder));
-        UnityEngine.Debug.Log("Brewed Tea: " + string.Join(", ", brewedTea));
+        Debug.Log("Order Tea: " + string.Join(", ", currentOrder));
+        Debug.Log("Brewed Tea: " + string.Join(", ", brewedTea));
 
         bool orderResult = IsOrderCorrect(brewedTea);
 
         if (orderResult)
         {
             UnityEngine.Debug.Log("Correct Order!");
-            orderActive = false;
-            teaRecipe.ResetRecipe();
-            GenerateNewOrder();
+            feedbackText.text = "Thank you!";
         }
         else
         {
             UnityEngine.Debug.Log("Wrong Order!");
-            orderActive = false;
-            teaRecipe.ResetRecipe();
-            GenerateNewOrder();
+            feedbackText.text = "I didn't order this!";
         }
+
+        orderActive = false;
+        teaRecipe.ResetRecipe();
     }
 
     private bool IsOrderCorrect(List<string> brewedTea)
     {
+        if (brewedTea.Count != currentOrder.Count) return false;
+        
         // Sort both lists alphabetically before comparison
         brewedTea.Sort();
         currentOrder.Sort();
 
-        if (brewedTea.Count != currentOrder.Count) return false;
         
         for (int i = 0; i < brewedTea.Count; i++)
         {

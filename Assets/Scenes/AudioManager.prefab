@@ -309,6 +309,26 @@ MonoBehaviour:
   sfxSounds:
   - name: dink
     clip: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
+  - name: ice
+    clip: {fileID: 8300000, guid: 9cc55c7bc9df0b44fad0022b5caefa9e, type: 3}
+  - name: sugar
+    clip: {fileID: 8300000, guid: 9aefb15450a49ac4fbff00da8a3e718c, type: 3}
+  - name: water
+    clip: {fileID: 8300000, guid: b9c74ede3a6032345b2f7de7c607c746, type: 3}
+  - name: milk
+    clip: {fileID: 8300000, guid: b9c74ede3a6032345b2f7de7c607c746, type: 3}
+  - name: leaves
+    clip: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
+  - name: cup
+    clip: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
+  - name: glass
+    clip: {fileID: 8300000, guid: d073b2294d77e7c4da6e269b650bdca1, type: 3}
+  - name: brewing
+    clip: {fileID: 8300000, guid: 5060d2398ce0c984ea41c2a9c71cb772, type: 3}
+  - name: coin
+    clip: {fileID: 8300000, guid: 7b4919abd56e59f41b6e42c7d65b5b66, type: 3}
+  - name: bell
+    clip: {fileID: 8300000, guid: a7d36e45c9fa1f94aaed164152b37277, type: 3}
   loopSounds: []
   musicSource: {fileID: 3269643019087238275}
   sfxSource: {fileID: 4171884224023223831}

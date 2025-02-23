@@ -73,6 +73,7 @@ public class Brewers : MonoBehaviour
 
         float elapsedTime = 0f;
         isBrewing = true;
+        AudioManagers.Instance.PlaySFX("brewing");
         // yield return new WaitForSeconds(brewingTime);
         while (elapsedTime < brewingTime)
         {
