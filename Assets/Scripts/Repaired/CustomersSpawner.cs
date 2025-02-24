@@ -56,9 +56,10 @@ public class CustomersSpawner : MonoBehaviour
         spriteRenderer.sprite = customerSprites[Random.Range(0, customerSprites.Length)];
 
         // Move customer to order point
+        AudioManagers.Instance.PlaySFX("door");
         StartCoroutine(MoveCustomer(currentCustomer, orderPoint.position, () =>
         {
-            orderManagers.GenerateNewOrder(); // Generate order when customer arrives
+            orderManagers.StartNewOrder(); // Generate order when customer arrives
             OnCustomerArrived?.Invoke(); // Trigger event for customer arrival
         }));
     }
@@ -79,6 +80,7 @@ public class CustomersSpawner : MonoBehaviour
 
         StartCoroutine(MoveCustomer(currentCustomer, spawnPoint.position, () =>
         {
+            AudioManagers.Instance.PlaySFX("door");
             Destroy(currentCustomer);
             isCustomerPresent = false;
             OnCustomerLeft?.Invoke(); // Trigger event for customer leaving

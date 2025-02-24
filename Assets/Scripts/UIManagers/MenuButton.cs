@@ -5,12 +5,14 @@ public class MenuButton : MonoBehaviour
     public void StartNewGame()
     {
         AudioManagers.Instance.PlaySFX("dink");
+        SavingManager.Instance.ResetGameData();
         GameManager.Instance.StartNewGame();
     }
 
     public void ContinueGame()
     {
         AudioManagers.Instance.PlaySFX("dink");
+        SavingManager.Instance.LoadGameData();
         GameManager.Instance.ContinueGame();
     }
 

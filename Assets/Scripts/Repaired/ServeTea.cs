@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,8 +51,15 @@ public class ServeTea : MonoBehaviour
         {
             UnityEngine.Debug.Log("Cannot add ice to a cup!");
         }
-        else if (selectedIngredient == "Milk" || selectedIngredient == "Sugar")
+        else if (selectedIngredient == "Sugar")
         {
+            AudioManagers.Instance.PlaySFX("sugar");
+            teaRecipe.AddIngredient(selectedIngredient); // Store sugar/milk
+            CursorManagers.Instance.ResetSelection();
+        }
+        else if (selectedIngredient == "Milk")
+        {
+            AudioManagers.Instance.PlaySFX("milk");
             teaRecipe.AddIngredient(selectedIngredient); // Store sugar/milk
             CursorManagers.Instance.ResetSelection();
         }
@@ -62,14 +71,16 @@ public class ServeTea : MonoBehaviour
 
     private void AddIce()
     {
+        AudioManagers.Instance.PlaySFX("ice");
         teaRecipe.AddIngredient("Ice");
         CursorManagers.Instance.ResetSelection();
     }
 
     private void ServeToCustomer()
     {
+        AudioManagers.Instance.PlaySFX("sip");
         teaOnTableButton.gameObject.SetActive(false);
-        orderManagers.CheckOrder();
+        StartCoroutine(waitingCheckOrder());
         currentTea = "";
         brewerScript.NotifyTeaServed();
         
@@ -92,5 +103,10 @@ public class ServeTea : MonoBehaviour
         teaOnTableButton.gameObject.SetActive(false);
         currentTea = "";
         brewerScript.NotifyTeaServed();
+    }
+
+    public IEnumerator waitingCheckOrder(){
+        yield return new WaitForSeconds(1.0f);
+        orderManagers.CheckOrder();
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,36 +17,51 @@ public class OrderManagers : MonoBehaviour
     [SerializeField] CustomersSpawner CustomersSpawner;
 
     [SerializeField] public TextMeshProUGUI feedbackText; 
+    [SerializeField] public TextMeshProUGUI textCoin; 
 
     private List<string> currentOrder = new List<string>(); // Stores generated order
     private bool orderActive = false;
     private bool isGlass;
 
+    private string teaLeaf;
+    private string sugarMilk;
+    private bool hasIce;
+
+
+    private int CoinCount;
+
     public void Start(){
         bubble.SetActive(false);
         textbubble.SetActive(false);
+        textCoin.text = $"{SavingManager.Instance.Coins}";
     }
 
-    public void GenerateNewOrder()
+    public void StartNewOrder()
     {
-        if (orderActive) return; // Only 1 order at a time
+        if(!orderActive){
+            StartCoroutine(GenerateNewOrder());
+        }
+    }
 
+    public IEnumerator GenerateNewOrder()
+    {
+
+        yield return new WaitForSeconds(2.0f);
+        AudioManagers.Instance.PlaySFX("order");
         bubble.SetActive(true);
         currentOrder.Clear();
-        string teaLeaf = GetRandomTeaLeaf();
-        bool hasIce = Random.value > 0.5f;
+        teaLeaf = GetRandomTeaLeaf();
+        hasIce = Random.value > 0.5f;
         isGlass = hasIce;
 
         currentOrder.Add(teaLeaf);
         currentOrder.Add(isGlass ? "Glass" : "Cup");
 
-        string sugarMilk = GetRandomSugarMilk(); // Randomly decide sugar/milk/none
+        sugarMilk = GetRandomSugarMilk(); // Randomly decide sugar/milk/none
         if (!string.IsNullOrEmpty(sugarMilk)) currentOrder.Add(sugarMilk);
 
         if (hasIce) currentOrder.Add("Ice");
-
         UpdateOrderUI(teaLeaf, isGlass, sugarMilk, hasIce);
-
         Debug.Log("New Order Arrived: " + string.Join(", ", currentOrder));
 
         orderActive = true;
@@ -62,6 +78,14 @@ public class OrderManagers : MonoBehaviour
     {
         int choice = Random.Range(0, 3); // 0 = None, 1 = Sugar, 2 = Milk
         return choice == 1 ? "Sugar" : choice == 2 ? "Milk" : null;
+    }
+
+    public IEnumerator AddCoins()
+    {
+        yield return new WaitForSeconds(1.0f);
+        AudioManagers.Instance.PlaySFX("coin");
+        SavingManager.Instance.AddCoins(10);
+        textCoin.text = $"{SavingManager.Instance.Coins}";
     }
 
     private void UpdateOrderUI(string tea, bool isGlass, string sugarMilk, bool hasIce)
@@ -123,6 +147,8 @@ public class OrderManagers : MonoBehaviour
             UnityEngine.Debug.Log("Correct Order!");
             textbubble.SetActive(true);
             feedbackText.text = "Thank you!";
+            StartCoroutine(AddCoins());
+            
         }
         else
         {
@@ -152,4 +178,6 @@ public class OrderManagers : MonoBehaviour
         }
         return true;
     }
+
+
 }

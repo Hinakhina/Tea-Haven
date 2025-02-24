@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TimeCycle : MonoBehaviour
 {
@@ -9,11 +10,16 @@ public class TimeCycle : MonoBehaviour
     public int closingHour = 17; // Shop closes at 5:00 PM
     [SerializeField] private GameObject blackPanel;
     private ClockTimeRun ClockTimeRun;
+    [SerializeField] TextMeshProUGUI textClosing;
 
     private bool isDayEnding = false;
 
+    private int DayCount;
+
     void Start()
     {
+        AudioManagers.Instance.PlaySFX("bell");
+        blackPanel.SetActive(false);
         customersSpawner = FindObjectOfType<CustomersSpawner>();
         ClockTimeRun = FindObjectOfType<ClockTimeRun>();
         if (customersSpawner == null)
@@ -66,12 +72,16 @@ public class TimeCycle : MonoBehaviour
     {
         Debug.Log("Next Day in 3...2...1..");
         yield return new WaitForSeconds(3f);
-        AudioManagers.Instance.PlaySFX("closing");
+        AudioManagers.Instance.PlaySFX("bell");
         blackPanel.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
+        DayCount = PlayerPrefs.GetInt("DayCount", 1);
+        textClosing.text = $"Day {DayCount}\nCompleted";
+        yield return new WaitForSeconds(2f);
+        textClosing.text = "";
+        yield return new WaitForSeconds(1f);
 
         ResetGameState();
-        AudioManagers.Instance.PlaySFX("opening");
         blackPanel.SetActive(false);
 
         Debug.Log("New day started!");

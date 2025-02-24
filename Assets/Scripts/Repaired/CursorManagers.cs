@@ -19,6 +19,7 @@ public class CursorManagers : MonoBehaviour
     [SerializeField] Texture2D hotWaterCursor;
     [SerializeField] Texture2D cupCursor;
     [SerializeField] Texture2D glassCursor;
+    [SerializeField] Texture2D defaultCursor;
 
     private string selectedIngredient = "";
 
@@ -30,6 +31,8 @@ public class CursorManagers : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        ResetSelection();
     }
 
     public void SelectIngredient(string ingredient)
@@ -77,8 +80,7 @@ public class CursorManagers : MonoBehaviour
                 break;
             case "Hot Water":
                 AudioManagers.Instance.PlaySFX("water");
-                StartCoroutine(waiting());
-                cursorImage = hotWaterCursor;
+                StartCoroutine(DelayedCursorChange(hotWaterCursor, 1.0f));
                 break;
             case "Cup":
                 AudioManagers.Instance.PlaySFX("cup");
@@ -93,9 +95,13 @@ public class CursorManagers : MonoBehaviour
         Cursor.SetCursor(cursorImage, Vector2.zero, CursorMode.Auto);
     }
 
-    public IEnumerator waiting(){
-        yield return new WaitForSeconds(3.0f);
+
+    private IEnumerator DelayedCursorChange(Texture2D cursor, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
     }
+
 
     public string GetSelectedIngredient()
     {
@@ -105,7 +111,7 @@ public class CursorManagers : MonoBehaviour
     public void ResetSelection()
     {
         selectedIngredient = "";
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
     }
 
     public bool IsGlassSelected()

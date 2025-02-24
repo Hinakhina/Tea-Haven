@@ -328,7 +328,13 @@ MonoBehaviour:
   - name: coin
     clip: {fileID: 8300000, guid: 7b4919abd56e59f41b6e42c7d65b5b66, type: 3}
   - name: bell
+    clip: {fileID: 8300000, guid: 5fc32f60506e2e947a34bb2e20e7892d, type: 3}
+  - name: door
     clip: {fileID: 8300000, guid: a7d36e45c9fa1f94aaed164152b37277, type: 3}
+  - name: sip
+    clip: {fileID: 8300000, guid: a317068846fda4240956150b098c6804, type: 3}
+  - name: order
+    clip: {fileID: 8300000, guid: 5fc32f60506e2e947a34bb2e20e7892d, type: 3}
   loopSounds: []
   musicSource: {fileID: 3269643019087238275}
   sfxSource: {fileID: 4171884224023223831}

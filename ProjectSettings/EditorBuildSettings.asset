@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/BackUpScenes/VirlyMainMenu.unity
     guid: c0d84e26ec2d52d40b04aaabf42c2201
   - enabled: 1
