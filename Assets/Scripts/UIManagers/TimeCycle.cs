@@ -20,6 +20,7 @@ public class TimeCycle : MonoBehaviour
     {
         AudioManagers.Instance.PlaySFX("bell");
         blackPanel.SetActive(false);
+        textClosing.gameObject.SetActive(false);
         customersSpawner = FindObjectOfType<CustomersSpawner>();
         ClockTimeRun = FindObjectOfType<ClockTimeRun>();
         if (customersSpawner == null)
@@ -74,11 +75,13 @@ public class TimeCycle : MonoBehaviour
         yield return new WaitForSeconds(3f);
         AudioManagers.Instance.PlaySFX("bell");
         blackPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
         DayCount = PlayerPrefs.GetInt("DayCount", 1);
-        textClosing.text = $"Day {DayCount}\nCompleted";
+        textClosing.text = $"Day {DayCount-1}\nCompleted";
+        textClosing.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
         yield return new WaitForSeconds(2f);
         textClosing.text = "";
+        textClosing.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
         ResetGameState();

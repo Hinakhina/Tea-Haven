@@ -11,6 +11,7 @@ public class OrderManagers : MonoBehaviour
     [SerializeField] Image teaLeafImage, sugarMilkImage, iceImage, completedTeaImage;
     [SerializeField] Sprite[] teaSprites; // Tea leaf sprites
     [SerializeField] Sprite[] completedTeaSprites; // Completed tea sprites
+    [SerializeField] Sprite[] milkTeaSprites; // Completed tea sprites
     [SerializeField] Sprite sugarSprite, milkSprite, emptySugarMilkSprite;
     [SerializeField] Sprite iceSprite, emptyIceSprite;
     [SerializeField] TeaRecipe teaRecipe;
@@ -122,13 +123,25 @@ public class OrderManagers : MonoBehaviour
     private Sprite GetCompletedTeaSprite(string tea, bool isGlass)
     {
         int index = isGlass ? 4 : 0; // Glass sprites start from index 4
-        switch (tea)
-        {
-            case "Chrysanthemum": return completedTeaSprites[index];
-            case "Green": return completedTeaSprites[index + 1];
-            case "Oolong": return completedTeaSprites[index + 2];
-            case "Lavender": return completedTeaSprites[index + 3];
-            default: return null;
+        if(sugarMilk == "Milk"){
+            switch (tea)
+            {
+                case "Chrysanthemum": return milkTeaSprites[index];
+                case "Green": return milkTeaSprites[index + 1];
+                case "Oolong": return milkTeaSprites[index + 2];
+                case "Lavender": return milkTeaSprites[index + 3];
+                default: return null;
+            }
+        }
+        else{
+            switch (tea)
+            {
+                case "Chrysanthemum": return completedTeaSprites[index];
+                case "Green": return completedTeaSprites[index + 1];
+                case "Oolong": return completedTeaSprites[index + 2];
+                case "Lavender": return completedTeaSprites[index + 3];
+                default: return null;
+            }
         }
     }
 

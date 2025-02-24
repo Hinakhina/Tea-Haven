@@ -8,6 +8,7 @@ public class ServeTea : MonoBehaviour
 {
     public Image teaOnTableButton; // Tea button on the table
     public Sprite[] teaSprites; // 8 variations: 4 for glass, 4 for cup
+    public Sprite[] milkTeaSprites; // 8 variations: 4 for glass, 4 for cup
     private string currentTea = "";
     private bool isGlass = false; // Determines if ice can be added
     [SerializeField] Brewers brewerScript;
@@ -61,6 +62,7 @@ public class ServeTea : MonoBehaviour
         {
             AudioManagers.Instance.PlaySFX("milk");
             teaRecipe.AddIngredient(selectedIngredient); // Store sugar/milk
+            teaOnTableButton.sprite = GetMilkTeaSprite(currentTea, isGlass);
             CursorManagers.Instance.ResetSelection();
         }
         else if (selectedIngredient == "")
@@ -98,6 +100,20 @@ public class ServeTea : MonoBehaviour
             default: return null;
         }
     }
+
+    private Sprite GetMilkTeaSprite(string teaType, bool useGlass)
+    {
+        int index = useGlass ? 4 : 0; // Glass sprites start from index 4
+        switch (teaType)
+        {
+            case "Chrysanthemum": return milkTeaSprites[index];
+            case "Green": return milkTeaSprites[index + 1];
+            case "Oolong": return milkTeaSprites[index + 2];
+            case "Lavender": return milkTeaSprites[index + 3];
+            default: return null;
+        }
+    }
+    
 
     public void ResetTea(){
         teaOnTableButton.gameObject.SetActive(false);
