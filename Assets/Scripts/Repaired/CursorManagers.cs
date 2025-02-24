@@ -77,7 +77,7 @@ public class CursorManagers : MonoBehaviour
                 break;
             case "Hot Water":
                 AudioManagers.Instance.PlaySFX("water");
-                // yield return new WaitForSeconds(1.0f);
+                StartCoroutine(waiting());
                 cursorImage = hotWaterCursor;
                 break;
             case "Cup":
@@ -91,6 +91,10 @@ public class CursorManagers : MonoBehaviour
         }
 
         Cursor.SetCursor(cursorImage, Vector2.zero, CursorMode.Auto);
+    }
+
+    public IEnumerator waiting(){
+        yield return new WaitForSeconds(3.0f);
     }
 
     public string GetSelectedIngredient()

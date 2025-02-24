@@ -38,7 +38,7 @@ public class CustomersSpawner : MonoBehaviour
                 yield break; // Stop the coroutine
             }
 
-            yield return new WaitForSeconds(Random.Range(3f, 5f)); // Delay before new customer
+            yield return new WaitForSeconds(Random.Range(2f, 4f)); // Delay before new customer
 
             SpawnCustomer();
         }
@@ -63,17 +63,19 @@ public class CustomersSpawner : MonoBehaviour
         }));
     }
 
-    public void ServeTeaFeedBack(bool isOrderCorrect)
+    public void ServeTeaFeedBack()
     {
         if (!isCustomerPresent) return; // No customer to serve
 
         StartCoroutine(CustomerLeaves());
     }
 
-    IEnumerator CustomerLeaves()
+    public IEnumerator CustomerLeaves()
     {
+        UnityEngine.Debug.Log("CustomerLeaving");
         yield return new WaitForSeconds(2f); // Wait before leaving
         orderManagers.feedbackText.text = ""; // Clear feedback
+        orderManagers.textbubble.SetActive(false);
 
         StartCoroutine(MoveCustomer(currentCustomer, spawnPoint.position, () =>
         {

@@ -27,8 +27,8 @@ public class ClockTimeRun : MonoBehaviour
             timer -= Time.deltaTime;
             while (timer <= 0)
             {
-                // Minute += 0.6667;
-                Minute += 5;
+                Minute += 0.7;
+                // Minute += 5;
                 OnMinuteChanged?.Invoke();
                 if (Minute >= 60)
                 {

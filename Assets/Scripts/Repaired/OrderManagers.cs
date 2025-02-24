@@ -5,6 +5,8 @@ using TMPro;
 
 public class OrderManagers : MonoBehaviour
 {
+    [SerializeField] GameObject bubble;
+    [SerializeField] public GameObject textbubble;
     [SerializeField] Image teaLeafImage, sugarMilkImage, iceImage, completedTeaImage;
     [SerializeField] Sprite[] teaSprites; // Tea leaf sprites
     [SerializeField] Sprite[] completedTeaSprites; // Completed tea sprites
@@ -13,16 +15,22 @@ public class OrderManagers : MonoBehaviour
     [SerializeField] TeaRecipe teaRecipe;
     [SerializeField] CustomersSpawner CustomersSpawner;
 
-    [SerializeField] public Text feedbackText; 
+    [SerializeField] public TextMeshProUGUI feedbackText; 
 
     private List<string> currentOrder = new List<string>(); // Stores generated order
     private bool orderActive = false;
     private bool isGlass;
 
+    public void Start(){
+        bubble.SetActive(false);
+        textbubble.SetActive(false);
+    }
+
     public void GenerateNewOrder()
     {
         if (orderActive) return; // Only 1 order at a time
 
+        bubble.SetActive(true);
         currentOrder.Clear();
         string teaLeaf = GetRandomTeaLeaf();
         bool hasIce = Random.value > 0.5f;
@@ -63,6 +71,16 @@ public class OrderManagers : MonoBehaviour
                                 sugarMilk == "Milk" ? milkSprite : emptySugarMilkSprite;
         iceImage.sprite = hasIce ? iceSprite : emptyIceSprite;
         completedTeaImage.sprite = GetCompletedTeaSprite(tea, isGlass);
+
+        SetImageAlpha(sugarMilkImage, !string.IsNullOrEmpty(sugarMilk));
+        SetImageAlpha(iceImage, hasIce);
+    }
+
+    private void SetImageAlpha(Image img, bool isVisible)
+    {
+        Color color = img.color;
+        color.a = isVisible ? 1f : 0f; // 1 = fully visible, 0 = invisible
+        img.color = color;
     }
 
     private Sprite GetTeaSprite(string tea)
@@ -98,20 +116,25 @@ public class OrderManagers : MonoBehaviour
         Debug.Log("Brewed Tea: " + string.Join(", ", brewedTea));
 
         bool orderResult = IsOrderCorrect(brewedTea);
+        bubble.SetActive(false);
 
         if (orderResult)
         {
             UnityEngine.Debug.Log("Correct Order!");
+            textbubble.SetActive(true);
             feedbackText.text = "Thank you!";
         }
         else
         {
             UnityEngine.Debug.Log("Wrong Order!");
+            textbubble.SetActive(true);
             feedbackText.text = "I didn't order this!";
         }
 
         orderActive = false;
         teaRecipe.ResetRecipe();
+        UnityEngine.Debug.Log("Customer is Leaving...");
+        CustomersSpawner.ServeTeaFeedBack();
     }
 
     private bool IsOrderCorrect(List<string> brewedTea)
