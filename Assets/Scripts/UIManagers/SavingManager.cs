@@ -46,6 +46,8 @@ public class SavingManager : MonoBehaviour
    
     public void LoadGameData()
     {
+        Coins = 0;
+        DayCount = 0;
         Coins = PlayerPrefs.GetInt("Coins", 0);
         DayCount = PlayerPrefs.GetInt("DayCount", 1);
     }

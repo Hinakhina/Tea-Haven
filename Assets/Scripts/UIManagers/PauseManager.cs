@@ -86,6 +86,7 @@ public class PauseManager : MonoBehaviour
     {
         AudioManagers.Instance.PlaySFX("dink");
         Debug.Log("Back to Main Menu...");
+        SavingManager.Instance.LoadGameData();
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
     }

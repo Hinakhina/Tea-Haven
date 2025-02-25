@@ -38,7 +38,7 @@ public class CustomersSpawner : MonoBehaviour
                 yield break; // Stop the coroutine
             }
 
-            yield return new WaitForSeconds(Random.Range(3f, 5f)); // Delay before new customer
+            yield return new WaitForSeconds(Random.Range(3f, 8f)); // Delay before new customer
 
             SpawnCustomer();
         }

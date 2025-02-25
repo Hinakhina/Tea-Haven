@@ -5,16 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/BackUpScenes/VirlyMainMenu.unity
-    guid: c0d84e26ec2d52d40b04aaabf42c2201
   - enabled: 1
-    path: Assets/Scenes/GamePlay.unity
-    guid: f0f9606143e1ad446b70b3ffe16741d3
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7faf45eed639643458910eb3fcd644f4
   - enabled: 1
     path: Assets/Scenes/SettingsPage.unity
     guid: de0ac06815086b04f84b46d85fafc893
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 7faf45eed639643458910eb3fcd644f4
+    path: Assets/Scenes/GamePlay.unity
+    guid: f0f9606143e1ad446b70b3ffe16741d3
   m_configObjects: {}

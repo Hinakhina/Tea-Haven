@@ -18,9 +18,7 @@ public class TimeCycle : MonoBehaviour
 
     void Start()
     {
-        AudioManagers.Instance.PlaySFX("bell");
-        blackPanel.SetActive(false);
-        textClosing.gameObject.SetActive(false);
+        StartCoroutine(OpeningScene());
         customersSpawner = FindObjectOfType<CustomersSpawner>();
         ClockTimeRun = FindObjectOfType<ClockTimeRun>();
         if (customersSpawner == null)
@@ -89,6 +87,22 @@ public class TimeCycle : MonoBehaviour
 
         Debug.Log("New day started!");
         ContinueGame();
+    }
+
+    public IEnumerator OpeningScene()
+    {
+        Debug.Log("Start Day in 3...2...1..");
+        blackPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        AudioManagers.Instance.PlaySFX("bell");
+        DayCount = PlayerPrefs.GetInt("DayCount", 1);
+        textClosing.text = $"Start\nDay {DayCount}";
+        textClosing.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        textClosing.text = "";
+        yield return new WaitForSeconds(1f);
+        textClosing.gameObject.SetActive(false);
+        blackPanel.SetActive(false);
     }
 
     void ResetGameState()
