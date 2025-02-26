@@ -25,4 +25,8 @@ public class TeaRecipe : MonoBehaviour
         currentRecipe.Clear();
         Debug.Log("Recipe reset.");
     }
+
+    public void TrashButton(){
+        AudioManagers.Instance.PlaySFX("trash");
+    }
 }

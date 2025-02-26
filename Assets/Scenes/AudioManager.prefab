@@ -314,11 +314,11 @@ MonoBehaviour:
   - name: sugar
     clip: {fileID: 8300000, guid: 3a19d451a4bc4d64abb8f550897d062b, type: 3}
   - name: water
-    clip: {fileID: 8300000, guid: 47971fa9d5116b84a85a3a5e05fdd872, type: 3}
+    clip: {fileID: 8300000, guid: 7bab447ef059ba6419ec69162fbaebae, type: 3}
   - name: milk
-    clip: {fileID: 8300000, guid: 26b2fcc878b5ad14a8765937ddf969e1, type: 3}
+    clip: {fileID: 8300000, guid: 08175557722486549b7daef379a48fee, type: 3}
   - name: leaves
-    clip: {fileID: 8300000, guid: 2a9e7ee53fcd86146976308bc55922ef, type: 3}
+    clip: {fileID: 8300000, guid: eec8b07f84a1d94448a475c4bc3ff47d, type: 3}
   - name: cup
     clip: {fileID: 8300000, guid: 7093080c3551fe44ca75fb05fc0790ab, type: 3}
   - name: glass
@@ -327,14 +327,18 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 08cddce783f335e4e934616949d8cdf3, type: 3}
   - name: coin
     clip: {fileID: 8300000, guid: cc5de475f10f5ae488a568036177f7b4, type: 3}
-  - name: bell
-    clip: {fileID: 8300000, guid: c08d9038bb4c2be4799b0975deb63bec, type: 3}
+  - name: intro
+    clip: {fileID: 8300000, guid: f06e585b1ca865d41a02119636b9f8a6, type: 3}
   - name: door
-    clip: {fileID: 8300000, guid: 008e6b1283c1d2c46879fe8c7cde2c35, type: 3}
+    clip: {fileID: 8300000, guid: 1c7d7eb87b340f64cacc4eef0bbcf7fc, type: 3}
   - name: sip
     clip: {fileID: 8300000, guid: f2fe6358bce1ce9459c0f67033a8620c, type: 3}
   - name: order
-    clip: {fileID: 8300000, guid: c08d9038bb4c2be4799b0975deb63bec, type: 3}
+    clip: {fileID: 8300000, guid: dea0688ec8b96954c9ead71bd9a11004, type: 3}
+  - name: outro
+    clip: {fileID: 8300000, guid: 95fd7e74961eeb74d984b2b03377bcf9, type: 3}
+  - name: trash
+    clip: {fileID: 8300000, guid: 006ea7339ca7d9e42b26ccd200382510, type: 3}
   loopSounds: []
   musicSource: {fileID: 3269643019087238275}
   sfxSource: {fileID: 4171884224023223831}

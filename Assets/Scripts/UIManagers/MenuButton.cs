@@ -25,25 +25,25 @@ public class MenuButton : MonoBehaviour
     public void ShowCredits()
     {
         AudioManagers.Instance.PlaySFX("dink");
-        GameManager.Instance.UIManager.ShowCredits();  // ✅ FIXED
+        GameManager.Instance.UIManager.ShowCredits(); 
     }
 
     public void CloseCredits()
     {
         AudioManagers.Instance.PlaySFX("dink");
-        GameManager.Instance.UIManager.CloseCredits(); // ✅ FIXED
+        GameManager.Instance.UIManager.CloseCredits(); 
     }
 
     public void ShowExitConfirmation()
     {
         AudioManagers.Instance.PlaySFX("dink");
-        GameManager.Instance.UIManager.ShowExitConfirmation(); // ✅ FIXED
+        GameManager.Instance.UIManager.ShowExitConfirmation(); 
     }
 
     public void CancelExit()
     {
         AudioManagers.Instance.PlaySFX("dink");
-        GameManager.Instance.UIManager.CancelExit(); // ✅ FIXED
+        GameManager.Instance.UIManager.CancelExit(); 
     }
 
     public void ExitGame()

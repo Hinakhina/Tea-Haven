@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class HowToPlayButton : MonoBehaviour
 {
     [SerializeField] GameObject helpPanel;
+    [SerializeField] GameObject page1, page2;
 
     private void Start()
     {
-        if (helpPanel != null) helpPanel.SetActive(false);
+        if (helpPanel != null){
+            helpPanel.SetActive(false);
+        }
     }
 
     public void ShowHelpPanel()
@@ -39,6 +42,16 @@ public class HowToPlayButton : MonoBehaviour
             Debug.LogWarning("helpPanel is not assigned in UIManager!");
         }
         
+    }
+
+    public void nextPage(){
+        page1.SetActive(false);
+        page2.SetActive(true);
+    }
+
+    public void prevPage(){
+        page2.SetActive(false);
+        page1.SetActive(true);
     }
     
 }

@@ -71,7 +71,7 @@ public class TimeCycle : MonoBehaviour
     {
         Debug.Log("Next Day in 3...2...1..");
         yield return new WaitForSeconds(3f);
-        AudioManagers.Instance.PlaySFX("bell");
+        AudioManagers.Instance.PlaySFX("outro");
         blackPanel.SetActive(true);
         DayCount = PlayerPrefs.GetInt("DayCount", 1);
         textClosing.text = $"Day {DayCount-1}\nCompleted";
@@ -93,8 +93,8 @@ public class TimeCycle : MonoBehaviour
     {
         Debug.Log("Start Day in 3...2...1..");
         blackPanel.SetActive(true);
+        AudioManagers.Instance.PlaySFX("intro");
         yield return new WaitForSeconds(1f);
-        AudioManagers.Instance.PlaySFX("bell");
         DayCount = PlayerPrefs.GetInt("DayCount", 1);
         textClosing.text = $"Start\nDay {DayCount}";
         textClosing.gameObject.SetActive(true);
