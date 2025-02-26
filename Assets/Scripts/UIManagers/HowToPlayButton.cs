@@ -17,7 +17,7 @@ public class HowToPlayButton : MonoBehaviour
 
     public void ShowHelpPanel()
     {
-        AudioManagers.Instance.PlaySFX("dink");
+        AudioManagers.Instance.PlaySFX("openBook");
         if (helpPanel != null)
         {
             helpPanel.SetActive(true);
@@ -31,7 +31,7 @@ public class HowToPlayButton : MonoBehaviour
 
     public void ResumeButton()
     {
-        AudioManagers.Instance.PlaySFX("dink");
+        AudioManagers.Instance.PlaySFX("closeBook");
         if (helpPanel != null)
         {
             helpPanel.SetActive(false);
@@ -45,11 +45,13 @@ public class HowToPlayButton : MonoBehaviour
     }
 
     public void nextPage(){
+        AudioManagers.Instance.PlaySFX("flips");
         page1.SetActive(false);
         page2.SetActive(true);
     }
 
     public void prevPage(){
+        AudioManagers.Instance.PlaySFX("flips");
         page2.SetActive(false);
         page1.SetActive(true);
     }

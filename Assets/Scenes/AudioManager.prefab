@@ -334,11 +334,17 @@ MonoBehaviour:
   - name: sip
     clip: {fileID: 8300000, guid: f2fe6358bce1ce9459c0f67033a8620c, type: 3}
   - name: order
-    clip: {fileID: 8300000, guid: dea0688ec8b96954c9ead71bd9a11004, type: 3}
+    clip: {fileID: 8300000, guid: 168564331bebacf449e66d25d529b1c1, type: 3}
   - name: outro
     clip: {fileID: 8300000, guid: 95fd7e74961eeb74d984b2b03377bcf9, type: 3}
   - name: trash
     clip: {fileID: 8300000, guid: 006ea7339ca7d9e42b26ccd200382510, type: 3}
+  - name: flips
+    clip: {fileID: 8300000, guid: 577082c9c49b5374dacb801ab486e095, type: 3}
+  - name: closeBook
+    clip: {fileID: 8300000, guid: c80409e8dd77845458fdb4017d868af8, type: 3}
+  - name: openBook
+    clip: {fileID: 8300000, guid: 577082c9c49b5374dacb801ab486e095, type: 3}
   loopSounds: []
   musicSource: {fileID: 3269643019087238275}
   sfxSource: {fileID: 4171884224023223831}

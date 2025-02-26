@@ -83,7 +83,6 @@ public class TimeCycle : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         ResetGameState();
-        blackPanel.SetActive(false);
 
         Debug.Log("New day started!");
         ContinueGame();
